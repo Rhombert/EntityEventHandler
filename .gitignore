@@ -1,1 +1,4 @@
 godot-cpp/
+cmake-build-debug/
+.idea
+.sconsign.dblite
