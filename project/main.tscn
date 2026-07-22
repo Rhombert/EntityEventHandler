@@ -1,0 +1,10 @@
+[gd_scene format=3 uid="uid://c8jgjf12vdkcy"]
+
+[ext_resource type="Script" uid="uid://lsqcyy2j6ful" path="res://test.gd" id="1_ig7tw"]
+
+[node name="Main" type="Node2D" unique_id=1718813403]
+
+[node name="EntityEventHandler" type="EntityEventHandler" parent="." unique_id=377156222]
+
+[node name="Test" type="Node" parent="." unique_id=1392795933]
+script = ExtResource("1_ig7tw")
