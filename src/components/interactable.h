@@ -1,7 +1,14 @@
 #ifndef ENTITYEVENTHANDLER_INTERACTABLES_H
 #define ENTITYEVENTHANDLER_INTERACTABLES_H
 
+#include <vector>
+
 #include <godot_cpp/classes/ref_counted.hpp>
+#include <godot_cpp/variant/dictionary.hpp>
+#include <godot_cpp/variant/variant.hpp>
+
+#include "./interactable_state.h"
+#include "./modifier.h"
 
 namespace godot {
     /**
@@ -18,12 +25,19 @@ namespace godot {
         Interactable();
         ~Interactable();
 
-        double getModValue() const;
+        void process(double delta);
+
+        double get_mod_value() const;
+
+        void gd_attach_modifier(Variant modifier);
+        void attach_modifier(Modifier modifier);
 
     protected:
         static void _bind_methods();
 
     private:
+        InteractableState m_state {};
+        std::vector<Modifier> m_modifiers {};
     };
 }
 

@@ -1,0 +1,9 @@
+[configuration]
+
+entry_symbol = "entity_event_handler_lib_init"
+compatibility_minimum = "4.1"
+reloadable = true
+
+[libraries]
+
+linux.debug.x86_64 = "./libentity_event_handler.linux.template_debug.x86_64.so"

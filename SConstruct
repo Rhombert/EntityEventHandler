@@ -11,14 +11,14 @@ env = SConscript("godot-cpp/SConstruct")
 # Configures the 'src' directory as a source for header files.
 env.Append(CPPPATH=[
     "src/",
-    "src/components/"
-    "src/types/"
+    "src/components/",
+    "src/types/",
 ])
 
 # Collects all .cpp files in the 'src' folder as compile targets.
 sources = (
     Glob("src/*.cpp") +
-    Glob("src/components/*.cpp")
+    Glob("src/components/*.cpp") +
     Glob("src/types/*.cpp")
 )
 
@@ -28,7 +28,7 @@ sources = (
 # env["suffix"] includes the build's feature tags (e.g. '.windows.template_debug.x86_64')
 # (see https://docs.godotengine.org/en/stable/tutorials/export/feature_tags.html).
 # The final path should match a path in the '.gdextension' file.
-lib_filename = "{}gdexample{}{}".format(env.subst('$SHLIBPREFIX'), env["suffix"], env.subst('$SHLIBSUFFIX'))
+lib_filename = "{}entity_event_handler{}{}".format(env.subst('$SHLIBPREFIX'), env["suffix"], env.subst('$SHLIBSUFFIX'))
 
 # Creates a SCons target for the path with our sources.
 library = env.SharedLibrary(

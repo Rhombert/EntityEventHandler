@@ -1,4 +1,5 @@
 #include "entity_event_handler.h"
+#include "godot_cpp/core/print_string.hpp"
 
 using namespace godot;
 
@@ -13,9 +14,11 @@ EntityEventHandler::EntityEventHandler() {
 EntityEventHandler::~EntityEventHandler() {}
 
 void EntityEventHandler::_process(double delta) {
+    for (auto& interactable : m_interactables)
+    {
 
+    }
 }
 
 void EntityEventHandler::initializePipelines() {
-
 }

@@ -1,7 +1,11 @@
 #ifndef ENTITYEVENTHANDLER_INTERACTION_H
 #define ENTITYEVENTHANDLER_INTERACTION_H
 
+#include <vector>
+
 #include <godot_cpp/classes/ref_counted.hpp>
+
+#include "./modifier.h"
 
 namespace godot {
     class Interaction : public RefCounted {
@@ -15,6 +19,7 @@ namespace godot {
         static void _bind_methods();
 
     private:
+        std::vector<Modifier> modifiers {};
     };
 }
 
