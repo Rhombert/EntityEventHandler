@@ -18,7 +18,6 @@ namespace godot {
         ~Hp() {};
 
         static Ref<Hp> create(double value);
-        static int test() { return 5; }
 
         void heal(double amount);
         void damage(double amount);

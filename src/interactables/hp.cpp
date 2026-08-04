@@ -26,10 +26,6 @@ void Hp::_bind_methods()
 {
     ClassDB::bind_static_method(
                          "Hp",
-                         D_METHOD("test"),
-                         &Hp::test);
-    ClassDB::bind_static_method(
-                         "Hp",
                          D_METHOD("create", "value"),
                          &Hp::create);
     ClassDB::bind_method(D_METHOD("heal", "amount"),

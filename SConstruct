@@ -33,7 +33,7 @@ library = env.SharedLibrary(
 Export("library")
 Export("env_test")
 # Selects the shared library as the default target.
-Default(library)
-# prog_test = SConscript("tests/SConscript",
-#                        duplicate=0)
-# Default(library, prog_test)
+# Default(library)
+prog_test = SConscript("tests/SConscript",
+                       duplicate=0)
+Default(library, prog_test)
