@@ -1,5 +1,4 @@
 #include "entity_event_handler.h"
-#include "godot_cpp/core/print_string.hpp"
 
 using namespace godot;
 

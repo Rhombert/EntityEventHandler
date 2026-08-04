@@ -3,15 +3,20 @@
 
 #include <godot_cpp/classes/ref_counted.hpp>
 
+#include "types/types.h"
+
 namespace godot {
     class InteractableState : public RefCounted {
         GDCLASS(InteractableState, RefCounted)
 
     public:
         InteractableState();
+        InteractableState(Types::Interactable type)
+            : m_type { type }
+        { };
         ~InteractableState();
 
-        void process(double delta);
+        static Ref<InteractableState> create() { return { }; }
 
         double get_mod_value() const;
 
@@ -19,7 +24,7 @@ namespace godot {
         static void _bind_methods();
 
     private:
-        double m_value {};
+        Types::Interactable m_type;
     };
 }
 

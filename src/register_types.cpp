@@ -1,13 +1,16 @@
 #include "register_types.h"
 
 #include "godot_cpp/core/class_db.hpp"
-#include "types/types.h"
 
 #include "components/modifier.h"
 #include "components/interactable_state.h"
 #include "components/interactable.h"
 #include "components/interaction.h"
 #include "components/entity_event_handler.h"
+
+#include "interactables/hp.h"
+
+#include "modifiers/regen.h"
 
 #include <gdextension_interface.h>
 #include <godot_cpp/core/defs.hpp>
@@ -25,6 +28,9 @@ void initialize_entity_event_handler_module(ModuleInitializationLevel p_level) {
 	GDREGISTER_CLASS(Interaction);
     GDREGISTER_CLASS(InteractableState);
 	GDREGISTER_CLASS(Interactable);
+    GDREGISTER_CLASS(Hp);
+    GDREGISTER_CLASS(Regen);
+
 	GDREGISTER_CLASS(EntityEventHandler);
 }
 

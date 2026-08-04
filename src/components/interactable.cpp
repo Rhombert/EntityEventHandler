@@ -1,7 +1,6 @@
 #include "godot_cpp/core/class_db.hpp"
-#include "godot_cpp/core/print_string.hpp"
 
-#include "interactable.h"
+#include "components/interactable.h"
 
 using namespace godot;
 

@@ -1,4 +1,7 @@
 extends Node
 
 func _ready() -> void:
-	pass
+	var hp = Hp.create(400)
+	print(hp.get_health())
+	hp.damage(22)
+	print(hp.get_health())

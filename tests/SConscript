@@ -1,0 +1,41 @@
+Import("library")
+Import("env_test")
+
+lib_path_list = [
+    "#_dep/googletest-1.17.0/googletest",
+    "#_dep/googletest-1.17.0/googlemock",
+]
+
+include_path_list = [
+    "#src/",
+    lib_path_list[0] + '/include',
+    lib_path_list[1] + '/include',
+]
+
+sources = (
+    Glob("*.cpp") +
+    Glob("./**/*.cpp") +
+    Glob("#/src/*.cpp") +
+    Glob("#/src/**/*.cpp")
+)
+
+common_libs = ['gtest_main', 'gtest', 'gmock_main', 'gmock', 'pthread']
+
+env_test.Append(
+    CXXFLAGS=["-std=c++17"],
+    CPPPATH=[
+        *include_path_list,
+        *lib_path_list,
+    ],
+    LIBS=[
+        *common_libs,
+    ]
+)
+
+prog_test = env_test.Program(
+    'test', 
+    source=sources,
+    LIBPATH=lib_path_list
+)
+
+Return('prog_test')

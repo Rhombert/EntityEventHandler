@@ -5,7 +5,7 @@
 
 #include <godot_cpp/classes/node.hpp>
 
-#include "interactable.h"
+#include "components/interactable.h"
 
 namespace godot {
     using InteractablePipeline = std::vector<std::vector<Interactable>>;

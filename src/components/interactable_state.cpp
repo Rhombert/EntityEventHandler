@@ -2,13 +2,13 @@
 
 using namespace godot;
 
-double InteractableState::get_mod_value() const
+
+InteractableState::InteractableState() {}
+InteractableState::~InteractableState() {}
+
+double InteractableState::get_mod_value() const 
 {
-    return m_value;
+    return 1.0;
 }
 
 void InteractableState::_bind_methods() {}
-
-InteractableState::InteractableState() {}
-
-InteractableState::~InteractableState() {}

@@ -1,10 +1,13 @@
-#include "interactable_state.h"
-#include "modifier.h"
+#include "components/modifier.h"
+#include "components/interactable_state.h"
 
 using namespace godot;
 
 Modifier::Modifier() {}
-
+Modifier::Modifier(double tick_rate, int tick_num)
+    : m_tick_rate { tick_rate }
+    , m_tick_num { tick_num }
+{ }
 Modifier::~Modifier() {}
 
 void Modifier::apply(double delta, InteractableState& state)
@@ -17,11 +20,7 @@ void Modifier::apply(double delta, InteractableState& state)
     }
 }
 
-void Modifier::apply_effect(InteractableState& state)
-{
-}
+void Modifier::apply_effect(InteractableState& state) {}
 
-void Modifier::_bind_methods() {
-
-}
+void Modifier::_bind_methods() {}
 

@@ -7,4 +7,4 @@
 [node name="Test" type="Node" parent="." unique_id=1392795933]
 script = ExtResource("1_ig7tw")
 
-[node name="EntityEventHandler" type="EntityEventHandler" parent="." unique_id=1905965992]
+[node name="EntityEventHandler" type="EntityEventHandler" parent="." unique_id=575971302]

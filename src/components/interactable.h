@@ -1,5 +1,5 @@
-#ifndef ENTITYEVENTHANDLER_INTERACTABLES_H
-#define ENTITYEVENTHANDLER_INTERACTABLES_H
+#ifndef ENTITYEVENTHANDLER_INTERACTABLE_H
+#define ENTITYEVENTHANDLER_INTERACTABLE_H
 
 #include <vector>
 
@@ -7,8 +7,8 @@
 #include <godot_cpp/variant/dictionary.hpp>
 #include <godot_cpp/variant/variant.hpp>
 
-#include "./interactable_state.h"
-#include "./modifier.h"
+#include "components/interactable_state.h"
+#include "components/modifier.h"
 
 namespace godot {
     /**
@@ -18,13 +18,15 @@ namespace godot {
      * can be interacted with by damage, and modifies the Entity in that
      * it destroys it when it reaches 0.
      */
-    class Interactable : public RefCounted{
+    class Interactable : public RefCounted {
         GDCLASS(Interactable, RefCounted);
 
     public:
         Interactable();
         ~Interactable();
 
+        // Handle the lifecycle of interactables. This primarily exists to
+        // facilitate `Modifier`s, which occur over time.
         void process(double delta);
 
         double get_mod_value() const;
@@ -41,4 +43,4 @@ namespace godot {
     };
 }
 
-#endif //ENTITYEVENTHANDLER_INTERACTABLES_H
+#endif//ENTITYEVENTHANDLER_INTERACTABLE_H
