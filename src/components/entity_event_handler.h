@@ -10,17 +10,15 @@
 namespace godot {
     using InteractablePipeline = std::vector<std::vector<Interactable>>;
 
-    class EntityEventHandler : public Node {
-        GDCLASS(EntityEventHandler, Node);
+    class EntityEventHandler {
 
     public:
         EntityEventHandler();
         ~EntityEventHandler();
 
-        void _process(double delta) override;
+        void _process(double delta);
 
     protected:
-        static void _bind_methods();
 
     private:
         InteractablePipeline m_interactable_pipeline {};

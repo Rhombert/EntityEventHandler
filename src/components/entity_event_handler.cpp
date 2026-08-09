@@ -2,10 +2,6 @@
 
 using namespace godot;
 
-void EntityEventHandler::_bind_methods() {
-
-}
-
 EntityEventHandler::EntityEventHandler() {
     initializePipelines();
 }

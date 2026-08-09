@@ -8,8 +8,7 @@
 #include "./modifier.h"
 
 namespace godot {
-    class Interaction : public RefCounted {
-        GDCLASS(Interaction, RefCounted)
+    class Interaction {
 
     public:
         Interaction();

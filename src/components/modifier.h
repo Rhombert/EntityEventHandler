@@ -6,15 +6,14 @@
 #include "components/interactable_state.h"
 
 namespace godot {
-    class Modifier : public RefCounted {
-        GDCLASS(Modifier, RefCounted)
+    class Modifier {
 
     public:
         Modifier();
         Modifier(double tick_rate, int tick_num);
         ~Modifier();
 
-        void apply(double delta, InteractableState& state);
+        virtual void apply(double delta, InteractableState& state);
 
     protected:
         void apply_effect(InteractableState& state);

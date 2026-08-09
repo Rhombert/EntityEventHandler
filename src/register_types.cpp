@@ -24,14 +24,14 @@ void initialize_entity_event_handler_module(ModuleInitializationLevel p_level) {
 		return;
 	}
 
-	GDREGISTER_CLASS(Modifier);
-	GDREGISTER_CLASS(Interaction);
-    GDREGISTER_CLASS(InteractableState);
-	GDREGISTER_CLASS(Interactable);
-    GDREGISTER_CLASS(Hp);
-    GDREGISTER_CLASS(Regen);
+	// GDREGISTER_CLASS(Modifier);
+	// GDREGISTER_CLASS(Interaction);
+    // GDREGISTER_CLASS(InteractableState);
+	// GDREGISTER_CLASS(Interactable);
+    // GDREGISTER_CLASS(Hp);
+    // GDREGISTER_CLASS(Regen);
 
-	GDREGISTER_CLASS(EntityEventHandler);
+	// GDREGISTER_CLASS(EntityEventHandler);
 }
 
 void uninitialize_entity_event_handler_module(ModuleInitializationLevel p_level) {

@@ -18,8 +18,7 @@ namespace godot {
      * can be interacted with by damage, and modifies the Entity in that
      * it destroys it when it reaches 0.
      */
-    class Interactable : public RefCounted {
-        GDCLASS(Interactable, RefCounted);
+    class Interactable {
 
     public:
         Interactable();
@@ -35,10 +34,9 @@ namespace godot {
         void attach_modifier(Modifier modifier);
 
     protected:
-        static void _bind_methods();
 
     private:
-        InteractableState m_state {};
+        InteractableState *m_state {};
         std::vector<Modifier> m_modifiers {};
     };
 }
