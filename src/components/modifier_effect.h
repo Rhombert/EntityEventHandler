@@ -1,18 +1,26 @@
 #ifndef ENTITYEVENTHANDLER_MODIFIER_EFFECT_H
 #define ENTITYEVENTHANDLER_MODIFIER_EFFECT_H
 
-class InteractableState;
-class Hp;
+#include <iostream>
 
-class ModifierEffect 
-{
-public:
-    virtual ~ModifierEffect() = default;
+namespace Interactables {
+    class InteractableState;
+    class Hp;
+    class AttackSpeed;
+}
 
-    virtual void apply_effect(InteractableState& state) = 0;
-    virtual void apply_effect(Hp& state) = 0;
+namespace Modifiers {
+    class ModifierEffect 
+    {
+    public:
+        virtual ~ModifierEffect() = default;
 
-private:
-};
+        virtual void apply_effect(Interactables::InteractableState& state) {}
+        virtual void apply_effect(Interactables::Hp& state) {}
+        virtual void apply_effect(Interactables::AttackSpeed& state) {}
+
+    private:
+    };
+}
 
 #endif//ENTITYEVENTHANDLER_MODIFIER_EFFECT_H

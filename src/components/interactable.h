@@ -3,14 +3,10 @@
 
 #include <vector>
 
-#include <godot_cpp/classes/ref_counted.hpp>
-#include <godot_cpp/variant/dictionary.hpp>
-#include <godot_cpp/variant/variant.hpp>
-
 #include "components/interactable_state.h"
 #include "components/modifier.h"
 
-namespace godot {
+namespace Interactables {
     /**
      * An Interactable representing a modifier to an Entity's behaviour.
      *
@@ -19,26 +15,25 @@ namespace godot {
      * it destroys it when it reaches 0.
      */
     class Interactable {
-
     public:
-        Interactable();
-        ~Interactable();
+        Interactable() = default;
+        ~Interactable() = default;
 
         // Handle the lifecycle of interactables. This primarily exists to
         // facilitate `Modifier`s, which occur over time.
         void process(double delta);
 
-        double get_mod_value() const;
+        double get_mod_value() const { return m_state->get_mod_value(); };
 
-        void gd_attach_modifier(Variant modifier);
-        void attach_modifier(Modifier modifier);
+        // void attach_modifier(Modifiers::Modifier modifier);
 
     protected:
 
     private:
-        InteractableState *m_state {};
-        std::vector<Modifier> m_modifiers {};
+        Interactables::InteractableState *m_state {};
+        std::vector<Modifiers::Modifier*> m_modifiers {};
     };
+
 }
 
 #endif//ENTITYEVENTHANDLER_INTERACTABLE_H

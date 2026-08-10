@@ -1,7 +1,6 @@
 #include "interactable_state.h"
 
-using namespace godot;
-
+using namespace Interactables;
 
 InteractableState::InteractableState() {}
 InteractableState::~InteractableState() {}

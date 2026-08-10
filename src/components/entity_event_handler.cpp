@@ -1,7 +1,5 @@
 #include "entity_event_handler.h"
 
-using namespace godot;
-
 EntityEventHandler::EntityEventHandler() {
     initializePipelines();
 }

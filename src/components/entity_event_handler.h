@@ -3,30 +3,29 @@
 
 #include <vector>
 
-#include <godot_cpp/classes/node.hpp>
-
 #include "components/interactable.h"
 
-namespace godot {
-    using InteractablePipeline = std::vector<std::vector<Interactable>>;
+using namespace Interactables;
 
-    class EntityEventHandler {
+class EntityEventHandler {
+using InteractablePipeline = std::vector<std::vector<Interactable>>;
 
-    public:
-        EntityEventHandler();
-        ~EntityEventHandler();
+public:
+    EntityEventHandler();
+    ~EntityEventHandler();
 
-        void _process(double delta);
+    void _process(double delta);
 
-    protected:
+    void add_interactable(Interactable& interactable);
 
-    private:
-        InteractablePipeline m_interactable_pipeline {};
+protected:
 
-        std::vector<Interactable> m_interactables {};
+private:
+    InteractablePipeline m_interactable_pipeline {};
 
-        void initializePipelines();
-    };
-}
+    std::vector<Interactable> m_interactables {};
+
+    void initializePipelines();
+};
 
 #endif //ENTITYEVENTHANDLER_ENTITY_EVENT_HANDLER_H

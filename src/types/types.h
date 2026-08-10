@@ -4,7 +4,9 @@
 namespace Types {
     enum class Interactable {
         HP,
+        ATTACK_SPEED,
+        INTERACTABLE_TYPES_COUNT,
     };
 }
 
-#endif //ENTITYEVENTHANDLER_TYPES_H
+#endif//ENTITYEVENTHANDLER_TYPES_H

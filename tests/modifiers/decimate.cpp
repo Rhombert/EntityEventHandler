@@ -8,11 +8,17 @@ class ModifierDecimateTest : public testing::Test
 protected:
     ModifierDecimateTest() {}
 
-    Hp hp { 100.0 };
-    Decimate decimate { 1.0 };
+    Interactables::Hp hp { 100.0 };
+    Modifiers::Decimate decimate { 1.0 };
 };
 
 TEST_F(ModifierDecimateTest, EffectReduceHp) {
     decimate.apply_effect(hp);
+    EXPECT_EQ(hp.get_health(), 99.0);
+}
+
+TEST_F(ModifierDecimateTest, EffectReducesHpCalledFromBase) {
+    Modifiers::ModifierEffect* mod = &decimate;
+    mod->apply_effect(hp);
     EXPECT_EQ(hp.get_health(), 99.0);
 }

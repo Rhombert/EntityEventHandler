@@ -18,7 +18,7 @@ namespace godot {
         static void _bind_methods();
 
     private:
-        std::vector<Modifier> modifiers {};
+        // std::vector<Modifiers::Modifier> modifiers {};
     };
 }
 

@@ -2,12 +2,7 @@
 
 #include "interactables/hp.h"
 
-using namespace godot;
-
-Hp Hp::create(double value) 
-{
-    return Hp { value };
-}
+using namespace Interactables;
 
 void Hp::heal(double amount)
 {
