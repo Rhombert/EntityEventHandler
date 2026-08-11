@@ -1,18 +1,19 @@
 #ifndef ENTITYEVENTHANDLER_MODIFIER_REGEN_H
 #define ENTITYEVENTHANDLER_MODIFIER_REGEN_H
 
-#include "components/modifier_effect.h"
+#include "components/effect.h"
 #include "interactables/hp.h"
 
-namespace Modifiers {
-    class Regen : public ModifierEffect 
+namespace Effects {
+    class Heal : public Effect
     {
 
     public:
-        Regen(double heal_value)
+        Heal(double heal_value)
             : m_heal_value { heal_value }
         { }
 
+        void apply_effect(Interactables::InteractableState& state) override;
         void apply_effect(Interactables::Hp& state) override;
 
     protected:

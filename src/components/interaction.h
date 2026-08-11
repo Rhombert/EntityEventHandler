@@ -1,11 +1,10 @@
 #ifndef ENTITYEVENTHANDLER_INTERACTION_H
 #define ENTITYEVENTHANDLER_INTERACTION_H
 
+#include <memory>
 #include <vector>
 
-#include <godot_cpp/classes/ref_counted.hpp>
-
-#include "./modifier.h"
+#include "components/modifier.h"
 
 namespace godot {
     class Interaction {
@@ -18,8 +17,9 @@ namespace godot {
         static void _bind_methods();
 
     private:
-        // std::vector<Modifiers::Modifier> modifiers {};
+        std::vector<std::unique_ptr<Effects::Effect>> effects {};
+        std::vector<Modifiers::Modifier> modifiers {};
     };
 }
 
-#endif //ENTITYEVENTHANDLER_INTERACTION_H
+#endif//ENTITYEVENTHANDLER_INTERACTION_H

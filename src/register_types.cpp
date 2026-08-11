@@ -10,7 +10,7 @@
 
 #include "interactables/hp.h"
 
-#include "modifiers/regen.h"
+#include "effects/heal.h"
 
 #include <gdextension_interface.h>
 #include <godot_cpp/core/defs.hpp>
@@ -29,7 +29,7 @@ void initialize_entity_event_handler_module(ModuleInitializationLevel p_level) {
     // GDREGISTER_CLASS(InteractableState);
 	// GDREGISTER_CLASS(Interactable);
     // GDREGISTER_CLASS(Hp);
-    // GDREGISTER_CLASS(Regen);
+    // GDREGISTER_CLASS(Heal);
 
 	// GDREGISTER_CLASS(EntityEventHandler);
 }

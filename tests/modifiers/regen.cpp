@@ -1,7 +1,7 @@
 #include <gtest/gtest.h>
 
 #include "interactables/hp.h"
-#include "modifiers/regen.h"
+#include "effects/heal.h"
 
 class ModifierRegenTest : public testing::Test
 {
@@ -11,7 +11,7 @@ protected:
     }
 
     Interactables::Hp hp { 100.0 };
-    Modifiers::Regen regen { 1.0 };
+    Effects::Heal regen { 1.0 };
 };
 
 TEST_F(ModifierRegenTest, EffectIncreasesHp) {
@@ -20,7 +20,7 @@ TEST_F(ModifierRegenTest, EffectIncreasesHp) {
 }
 
 TEST_F(ModifierRegenTest, EffectIncreasesHpCalledFromBase) {
-    Modifiers::ModifierEffect* mod = &regen;
+    Effects::Effect* mod = &regen;
     mod->apply_effect(hp);
     EXPECT_EQ(hp.get_health(), 81.0);
 }

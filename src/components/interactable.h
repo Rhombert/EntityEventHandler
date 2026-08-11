@@ -1,6 +1,7 @@
 #ifndef ENTITYEVENTHANDLER_INTERACTABLE_H
 #define ENTITYEVENTHANDLER_INTERACTABLE_H
 
+#include <memory>
 #include <vector>
 
 #include "components/interactable_state.h"
@@ -17,6 +18,12 @@ namespace Interactables {
     class Interactable {
     public:
         Interactable() = default;
+
+        template<typename S>
+        Interactable(S state)
+            : m_state { std::make_unique<S>() }
+        { }
+
         ~Interactable() = default;
 
         // Handle the lifecycle of interactables. This primarily exists to
@@ -30,8 +37,8 @@ namespace Interactables {
     protected:
 
     private:
-        Interactables::InteractableState *m_state {};
-        std::vector<Modifiers::Modifier*> m_modifiers {};
+        std::unique_ptr<Interactables::InteractableState> m_state {};
+        std::vector<std::unique_ptr<Modifiers::Modifier>> m_modifiers {};
     };
 
 }

@@ -3,8 +3,8 @@
 using namespace Modifiers;
 
 
-Modifier::Modifier(ModifierEffect* effect, double tick_rate, int tick_num)
-    : m_effect { std::unique_ptr<ModifierEffect>(effect) }
+Modifier::Modifier(Effects::Effect* effect, double tick_rate, int tick_num)
+    : m_effect { std::unique_ptr<Effects::Effect>(effect) }
     , m_tick_rate { tick_rate }
     , m_tick_num { tick_num }
 { }

@@ -3,14 +3,14 @@
 
 #include <memory>
 
-#include "components/modifier_effect.h"
+#include "components/effect.h"
 
 namespace Modifiers {
     class Modifier 
     {
     public:
         Modifier() = default;
-        Modifier(ModifierEffect* effect, double tick_rate, int tick_num);
+        Modifier(Effects::Effect* effect, double tick_rate, int tick_num);
         ~Modifier();
 
         virtual void apply(double delta, 
@@ -32,11 +32,9 @@ namespace Modifiers {
         // is passed for another tick.
         double m_time_acc { 0.0 };
 
-        std::unique_ptr<ModifierEffect> m_effect { nullptr };
+        std::unique_ptr<Effects::Effect> m_effect { nullptr };
     };
-
-
 }
 
 
-#endif //ENTITYEVENTHANDLER_MODIFIER_H
+#endif//ENTITYEVENTHANDLER_MODIFIER_H

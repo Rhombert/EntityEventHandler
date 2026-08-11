@@ -1,8 +1,7 @@
 #include <gtest/gtest.h>
-#include <memory>
 
 #include "interactables/hp.h"
-#include "modifiers/decimate.h"
+#include "effects/damage.h"
 #include "components/modifier.h"
 
 class ModifierTest : public testing::Test
@@ -13,7 +12,7 @@ protected:
 
     Interactables::Hp hp { 100.0 };
     Modifiers::Modifier decimate { 
-        new Modifiers::Decimate { 1.0 },
+        new Effects::Damage { 1.0 },
         0.2,
         10
     };

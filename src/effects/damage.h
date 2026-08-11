@@ -1,15 +1,14 @@
 #ifndef ENTITYEVENTHANDLER_MODIFIER_DECIMATE_H
 #define ENTITYEVENTHANDLER_MODIFIER_DECIMATE_H
 
-#include "components/interactable.h"
-#include "components/modifier_effect.h"
+#include "components/effect.h"
 #include "interactables/hp.h"
 
-namespace Modifiers {
-    class Decimate : public ModifierEffect
+namespace Effects {
+    class Damage : public Effects::Effect
     {
     public:
-        Decimate(double damage_value)
+        Damage(double damage_value)
             : m_damage_value { damage_value }
         { }
 
