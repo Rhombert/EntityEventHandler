@@ -32,6 +32,8 @@ namespace Interactables {
 
         double get_mod_value() const { return m_state->get_mod_value(); };
 
+        const InteractableState* get_state() { return m_state.get(); }
+
         // void attach_modifier(Modifiers::Modifier modifier);
 
     protected:

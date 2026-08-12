@@ -7,8 +7,7 @@
 class ModifierTest : public testing::Test
 {
 protected:
-    ModifierTest() {
-    }
+    ModifierTest() {}
 
     Interactables::Hp hp { 100.0 };
     Modifiers::Modifier decimate { 
