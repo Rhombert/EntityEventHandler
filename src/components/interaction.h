@@ -14,26 +14,10 @@ namespace Interactions {
     class Interaction 
     {
     public:
-        template<typename... M>
-                requires (std::derived_from<M, Modifiers::Modifier> && ...)
-        Interaction(M&... modifiers)
-            : m_effects { }
-            , m_modifiers { }
-        { 
-            (m_modifiers.emplace_back(std::make_unique<M>(
-                modifiers
-            )), ...);
-        }
-        
-        // template<typename... E, typename... M>
-        //     requires(std::derived_from<E, Effects::Effect> && ...)
-        //          && (std::derived_from<M, Modifiers::Modifier> && ...)
-        // Interaction(E... effects, M... modifiers)
-        //     : m_effects { effects... }
-        //     , m_modifiers { modifiers... }
-        // { }
+        void add(Effects::Effect&);
+        void add(Modifiers::Modifier&);
 
-        void apply(Interactables::Interactable& interactable) const;
+        void apply(Interactables::Interactable&) const;
 
     protected:
         static void _bind_methods();

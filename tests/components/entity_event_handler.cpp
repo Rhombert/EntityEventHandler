@@ -10,6 +10,11 @@ protected:
     EntityEventHandlerTest() {}
 
     EntityEventHandler event_handler { 100.0, 1.0 };
+    Modifiers::Modifier mod_decimate {
+        new Effects::Damage { 1.0 },
+        0.2,
+        10
+    };
 };
 
 TEST_F(EntityEventHandlerTest, AbleToRetrieveHp)
@@ -20,14 +25,8 @@ TEST_F(EntityEventHandlerTest, AbleToRetrieveHp)
 
 TEST_F(EntityEventHandlerTest, DecimateBaseTickReducesHp)
 {
-    Modifiers::Modifier mod_decimate {
-        new Effects::Damage { 1.0 },
-        0.2,
-        10
-    };
-    Interactions::Interaction int_decimate {
-        mod_decimate
-    };
+    Interactions::Interaction int_decimate {};
+    int_decimate.add(mod_decimate);
 
     event_handler.recieve_interaction(int_decimate);
     event_handler._process(0.0);
