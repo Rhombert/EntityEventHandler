@@ -5,39 +5,26 @@
 #include <memory>
 
 #include "components/interactable.h"
+#include "components/interaction.h"
+
 #include "interactables/hp.h"
 #include "interactables/turn_speed.h"
+
 #include "types/types.h"
+#include "types/type_to_class.h"
 
 using namespace Interactables;
 
-//TODO: MOVE THIS
-template<Types::Interactable>
-struct InteractableType;
-
-template<>
-struct InteractableType<Types::Interactable::HP> {
-    using type = Hp;
-};
-
-template<>
-struct InteractableType<Types::Interactable::TURN_SPEED> {
-    using type = TurnSpeed;
-};
-
-template<Types::Interactable I>
-using InteractableTypeT = typename InteractableType<I>::type;
-
 class EntityEventHandler {
-using InteractablePipeline = std::vector<std::vector<Interactable>>;
-
 public:
     EntityEventHandler(double hp, double turn_speed)
     {
         m_interactables.resize(
-                (unsigned long)(Types::Interactable::INTERACTABLE_TYPES_COUNT)
+            (unsigned long)(Types::Interactable::INTERACTABLE_TYPES_COUNT)
         );
         m_interactables[(size_t)Types::Interactable::HP] =
+            std::make_unique<Interactable>(Hp { 100.0 });
+        m_interactables[(size_t)Types::Interactable::ATTACK_SPEED] =
             std::make_unique<Interactable>(Hp { 100.0 });
         m_interactables[(size_t)Types::Interactable::TURN_SPEED] =
             std::make_unique<Interactable>(TurnSpeed { 1.0 });
@@ -45,10 +32,18 @@ public:
 
     void _process(double delta);
 
+    void recieve_interaction(Interactions::Interaction& interaction)
+    {
+        for (auto& interactable : m_interactables) {
+            if (!interactable) continue;
+            interaction.apply(*interactable);
+        }
+    }
+
     template<Types::Interactable I>
-    const InteractableTypeT<I>* get_interactable() const
+    const Types::InteractableTypeT<I>* get_interactable() const
     { 
-        return static_cast<const Hp*>(
+        return static_cast<const Types::InteractableTypeT<I>*>(
             m_interactables.at((size_t)I).get()->get_state()
         );
     }
@@ -56,8 +51,6 @@ public:
 protected:
 
 private:
-    InteractablePipeline m_interactable_pipeline {};
-
     std::vector<std::unique_ptr<Interactable>> m_interactables {};
 };
 

@@ -4,17 +4,26 @@
 #include <memory>
 
 #include "components/effect.h"
+#include "types/types.h"
 
 namespace Modifiers {
     class Modifier 
     {
     public:
-        Modifier() = default;
-        Modifier(Effects::Effect* effect, double tick_rate, int tick_num);
-        ~Modifier();
+        Modifier(Effects::Effect* effect, 
+                 double tick_rate, 
+                 int tick_num,
+                 bool instant_activation = true);
+        Modifier(const Modifier& modifier);
 
-        virtual void apply(double delta, 
-                           Interactables::InteractableState& state);
+        Types::Interactable get_target() const 
+        {
+            return m_effect->get_target(); 
+        }
+
+        Effects::Effect* get_effect() const { return m_effect.get(); }
+
+        void apply(double delta, Interactables::InteractableState& state);
 
     protected:
         double get_tick_rate() const { return m_tick_rate; };
@@ -29,8 +38,9 @@ namespace Modifiers {
         // The number of ticks before the Modifier self destructs
         int m_tick_num { 1 };
         // The current accumulated time, determines when the threshold
-        // is passed for another tick.
+        //  is passed for another tick.
         double m_time_acc { 0.0 };
+        bool m_instant_activation { };
 
         std::unique_ptr<Effects::Effect> m_effect { nullptr };
     };

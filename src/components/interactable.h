@@ -17,30 +17,31 @@ namespace Interactables {
      */
     class Interactable {
     public:
-        Interactable() = default;
-
         template<typename S>
         Interactable(S state)
-            : m_state { std::make_unique<S>() }
+            : m_state { std::make_unique<S>( state ) }
         { }
-
-        ~Interactable() = default;
 
         // Handle the lifecycle of interactables. This primarily exists to
         // facilitate `Modifier`s, which occur over time.
         void process(double delta);
 
-        double get_mod_value() const { return m_state->get_mod_value(); };
+        Types::Interactable get_type() const;
+        double get_mod_value() const;
 
-        const InteractableState* get_state() { return m_state.get(); }
+        const InteractableState* get_state();
 
-        // void attach_modifier(Modifiers::Modifier modifier);
+        void attach(const Modifiers::Modifier& modifier);
+        void attach(const Modifiers::Modifier* modifier);
+        void attach(const Effects::Effect& effect);
+        void attach(const Effects::Effect* effect);
 
     protected:
 
     private:
         std::unique_ptr<Interactables::InteractableState> m_state {};
         std::vector<std::unique_ptr<Modifiers::Modifier>> m_modifiers {};
+        std::vector<std::unique_ptr<Effects::Effect>> m_effect_queue {};
     };
 
 }

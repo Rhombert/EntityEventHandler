@@ -14,6 +14,8 @@ namespace Interactables {
         { };
         ~InteractableState();
 
+        Types::Interactable get_type() const { return m_type; }
+
         virtual void receive_effect(Effects::Effect *effect) = 0;
         double get_mod_value() const;
 

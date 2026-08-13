@@ -3,13 +3,24 @@
 using namespace Modifiers;
 
 
-Modifier::Modifier(Effects::Effect* effect, double tick_rate, int tick_num)
+Modifier::Modifier(Effects::Effect* effect, 
+                   double tick_rate, 
+                   int tick_num,
+                   bool instant_activation)
     : m_effect { std::unique_ptr<Effects::Effect>(effect) }
     , m_tick_rate { tick_rate }
     , m_tick_num { tick_num }
+    , m_time_acc { instant_activation ? tick_rate : 0.0 }
+    , m_instant_activation { instant_activation }
 { }
 
-Modifier::~Modifier() {}
+Modifier::Modifier(const Modifier& modifier)
+    : m_effect (modifier.m_effect->clone())
+    , m_tick_rate { modifier.m_tick_rate }
+    , m_tick_num { modifier.m_tick_num }
+    , m_time_acc { modifier.m_instant_activation ? modifier.m_tick_rate : 0.0 }
+    , m_instant_activation { modifier.m_instant_activation }
+{ }
 
 void Modifier::apply(double delta, 
                            Interactables::InteractableState& state)
@@ -18,6 +29,6 @@ void Modifier::apply(double delta,
     while (m_time_acc >= m_tick_rate)
     {
         m_time_acc -= m_tick_rate;
-        m_effect->apply_effect(state);
+        m_effect->apply_effect(&state);
     }
 }

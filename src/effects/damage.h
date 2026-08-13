@@ -3,17 +3,26 @@
 
 #include "components/effect.h"
 #include "interactables/hp.h"
+#include "types/types.h"
+#include <memory>
 
 namespace Effects {
-    class Damage : public Effects::Effect
+    class Damage : public Effect
     {
     public:
         Damage(double damage_value)
-            : m_damage_value { damage_value }
+            : Effect { Types::Interactable::HP }
+            , m_damage_value { damage_value }
+        { }
+        Damage(const Damage& damage)
+            : Effect { Types::Interactable::HP }
+            , m_damage_value { damage.m_damage_value }
         { }
 
-        void apply_effect(Interactables::InteractableState& state) override;
-        void apply_effect(Interactables::Hp& state) override;
+        void apply_effect(Interactables::InteractableState* state) override;
+        void apply_effect(Interactables::Hp* state) override;
+
+        std::unique_ptr<Effect> clone() const override;
             
     protected:
 

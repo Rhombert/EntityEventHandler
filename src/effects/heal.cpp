@@ -4,12 +4,17 @@
 using namespace Interactables;
 using namespace Effects;
 
-void Heal::apply_effect(InteractableState& state)
+void Heal::apply_effect(InteractableState* state)
 {
-    apply_effect(static_cast<Hp&>(state));
+    apply_effect(static_cast<Hp*>(state));
 }
 
-void Heal::apply_effect(Hp& state)
+void Heal::apply_effect(Hp* state)
 {
-    state.heal(m_heal_value);
+    state->heal(m_heal_value);
+}
+
+std::unique_ptr<Effect> Heal::clone() const
+{
+    return std::make_unique<Heal>(*this);
 }

@@ -24,7 +24,7 @@ namespace Interactables {
 
         void receive_effect(Effects::Effect *effect) override
         {
-            effect->apply_effect(*this);
+            effect->apply_effect(this);
         }
 
         double get_health() const { return m_current_health; }

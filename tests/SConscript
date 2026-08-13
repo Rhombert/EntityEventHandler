@@ -22,7 +22,8 @@ sources = (
 common_libs = ['gtest_main', 'gtest', 'gmock_main', 'gmock', 'pthread']
 
 env_test.Append(
-    CXXFLAGS=["-std=c++17"],
+    # Use the same as the project
+    # CXXFLAGS=["-std=c++20"],
     CPPPATH=[
         *include_path_list,
         *lib_path_list,
