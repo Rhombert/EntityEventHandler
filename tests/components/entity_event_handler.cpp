@@ -9,10 +9,14 @@ class EntityEventHandlerTest : public testing::Test
 protected:
     EntityEventHandlerTest() {}
 
-    EntityEventHandler event_handler { 100.0, 1.0 };
+    const double MAX_HP { 100.0 };
+    const double TICK_TIME { 0.2 };
+    const double DAMAGE_AMOUNT { 1.0 };
+
+    EntityEventHandler event_handler { MAX_HP, 1.0 };
     Modifiers::Modifier mod_decimate {
-        new Effects::Damage { 1.0 },
-        0.2,
+        new Effects::Damage { DAMAGE_AMOUNT },
+        TICK_TIME,
         10
     };
 };
@@ -32,5 +36,42 @@ TEST_F(EntityEventHandlerTest, DecimateBaseTickReducesHp)
     event_handler._process(0.0);
 
     auto* hp = event_handler.get_interactable<Types::Interactable::HP>();
-    ASSERT_LT(hp->get_health(), 100.0);
+    ASSERT_LT(hp->get_health(), MAX_HP);
+}
+
+TEST_F(EntityEventHandlerTest, DecimateBaseTickReducesCorrectAmountHp)
+{
+    Interactions::Interaction int_decimate {};
+    int_decimate.add(mod_decimate);
+
+    event_handler.recieve_interaction(int_decimate);
+    event_handler._process(0.0);
+
+    auto* hp = event_handler.get_interactable<Types::Interactable::HP>();
+    ASSERT_EQ(hp->get_health(), MAX_HP - DAMAGE_AMOUNT);
+}
+
+TEST_F(EntityEventHandlerTest, DecimateTenTicksReducesCorrectAmountHp)
+{
+    Interactions::Interaction int_decimate {};
+    int_decimate.add(mod_decimate);
+
+    event_handler.recieve_interaction(int_decimate);
+    event_handler._process(TICK_TIME*9.0);
+
+    auto* hp = event_handler.get_interactable<Types::Interactable::HP>();
+    ASSERT_EQ(hp->get_health(), MAX_HP - DAMAGE_AMOUNT * 10.0);
+}
+
+TEST_F(EntityEventHandlerTest, DoubleDecimateTenTicksReducesCorrectAmountHp)
+{
+    Interactions::Interaction int_decimate {};
+    int_decimate.add(mod_decimate);
+    int_decimate.add(mod_decimate);
+
+    event_handler.recieve_interaction(int_decimate);
+    event_handler._process(TICK_TIME*9.0);
+
+    auto* hp = event_handler.get_interactable<Types::Interactable::HP>();
+    ASSERT_EQ(hp->get_health(), MAX_HP - DAMAGE_AMOUNT * 2.0 * 10.0);
 }
