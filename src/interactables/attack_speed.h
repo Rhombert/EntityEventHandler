@@ -1,32 +1,37 @@
 #ifndef ENTITYEVENTHANDLER_INTERACTABLE_ATTACK_SPEED_H
 #define ENTITYEVENTHANDLER_INTERACTABLE_ATTACK_SPEED_H
 
+#include "components/effect.h"
 #include "types/types.h"
 #include "components/interactable_state.h"
 
-class AttackSpeed : public InteractableState {
-public:
-    AttackSpeed(double base_attack_speed = 1.0)
-        : InteractableState { Types::Interactable::ATTACK_SPEED }
-        , m_base_attack_speed { base_attack_speed }
-        , m_current_attack_speed { base_attack_speed }
-    { }
+namespace Interactables {
+    class AttackSpeed : public InteractableState {
+    public:
+        AttackSpeed(double base_attack_speed = 1.0)
+            : InteractableState { Types::Interactable::ATTACK_SPEED }
+            , m_base_attack_speed { base_attack_speed }
+            , m_current_attack_speed { base_attack_speed }
+        { }
 
-    void reset() { m_current_attack_speed = m_base_attack_speed; }
+        void reset();
 
-    void receive_effect(Modifiers::ModifierEffect *effect)
-    {
-        effect->apply_effect(*this);
-    }
+        void receive_effect(Effects::Effect *effect) override;
 
-    double get_mod_value() const { return m_current_attack_speed; }
+        double get_attack_speed() const;
+        double get_base_attack_speed() const;
 
-protected:
-    
+        void apply_base_multiplier(double mul) override;
+        void apply_additive_bonus(double mul) override;
+        void apply_total_multiplier(double mul) override;
 
-private:
-    double m_base_attack_speed {};
-    double m_current_attack_speed {};
-};
+    protected:
+        
+
+    private:
+        double m_base_attack_speed {};
+        double m_current_attack_speed {};
+    };
+}
 
 #endif//ENTITYEVENTHANDLER_INTERACTABLE_ATTACK_SPEED_H

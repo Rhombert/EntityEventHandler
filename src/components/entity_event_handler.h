@@ -8,6 +8,7 @@
 #include "components/interaction.h"
 
 #include "interactables/hp.h"
+#include "interactables/attack_speed.h"
 #include "interactables/turn_speed.h"
 
 #include "types/types.h"
@@ -25,7 +26,7 @@ public:
         m_interactables[(size_t)Types::Interactable::HP] =
             std::make_unique<Interactable>(Hp { 100.0 });
         m_interactables[(size_t)Types::Interactable::ATTACK_SPEED] =
-            std::make_unique<Interactable>(Hp { 100.0 });
+            std::make_unique<Interactable>(AttackSpeed { 1.0 });
         m_interactables[(size_t)Types::Interactable::TURN_SPEED] =
             std::make_unique<Interactable>(TurnSpeed { 1.0 });
     }
