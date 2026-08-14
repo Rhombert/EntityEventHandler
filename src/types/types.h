@@ -4,6 +4,7 @@
 namespace Types {
     enum class Interactable {
         HP,
+        ARMOUR,
         ATTACK_SPEED,
         TURN_SPEED,
         INTERACTABLE_TYPES_COUNT,

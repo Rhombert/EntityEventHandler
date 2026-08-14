@@ -29,6 +29,8 @@ namespace Interactables {
         
 
     private:
+        // The delay in seconds between each attack.
+        // A value of 0.5 means two attacks a second.
         double m_base_attack_speed {};
         double m_current_attack_speed {};
     };
