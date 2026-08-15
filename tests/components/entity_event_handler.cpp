@@ -75,3 +75,16 @@ TEST_F(EntityEventHandlerTest, DoubleDecimateTenTicksReducesCorrectAmountHp)
     auto* hp = event_handler.get_interactable<Types::Interactable::HP>();
     ASSERT_EQ(hp->get_health(), MAX_HP - DAMAGE_AMOUNT * 2.0 * 10.0);
 }
+
+TEST_F(EntityEventHandlerTest, TwoInterDecimateTenTicksReducesCorrectAmountHp)
+{
+    Interactions::Interaction int_decimate {};
+    int_decimate.add(mod_decimate);
+
+    event_handler.recieve_interaction(int_decimate);
+    event_handler.recieve_interaction(int_decimate);
+    event_handler._process(TICK_TIME*9.0);
+
+    auto* hp = event_handler.get_interactable<Types::Interactable::HP>();
+    ASSERT_EQ(hp->get_health(), MAX_HP - DAMAGE_AMOUNT * 2.0 * 10.0);
+}

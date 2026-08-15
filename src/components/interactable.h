@@ -27,7 +27,7 @@ namespace Interactables {
         void process(double delta);
 
         Types::Interactable get_type() const;
-        double get_mod_value() const;
+        double get_value() const;
 
         const InteractableState* get_state();
 
@@ -43,7 +43,6 @@ namespace Interactables {
         std::vector<std::unique_ptr<Modifiers::Modifier>> m_modifiers {};
         std::vector<std::unique_ptr<Effects::Effect>> m_effect_queue {};
     };
-
 }
 
 #endif//ENTITYEVENTHANDLER_INTERACTABLE_H

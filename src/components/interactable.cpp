@@ -18,9 +18,9 @@ Types::Interactable Interactable::get_type() const
     return m_state->get_type(); 
 }
 
-double Interactable::get_mod_value() const 
+double Interactable::get_value() const 
 { 
-    return m_state->get_mod_value(); 
+    return m_state->get_current_value(); 
 };
 
 const InteractableState* Interactable::get_state() 

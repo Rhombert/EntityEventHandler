@@ -6,6 +6,7 @@ namespace Types {
         HP,
         ARMOUR,
         ATTACK_SPEED,
+        MOVE_SPEED,
         TURN_SPEED,
         INTERACTABLE_TYPES_COUNT,
     };

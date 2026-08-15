@@ -2,43 +2,32 @@
 #define ENTITYEVENTHANDLER_INTERACTABLE_HP_H
 
 #include "components/effect.h"
-#include "types/types.h"
 #include "components/interactable_state.h"
 
 namespace Interactables {
-    // Hp is bound to its maximum value and 0
-    // 
-    // This is a `flat` state, the value assigned
-    // is the literal value.
     class Hp : public InteractableState {
 
     public:
-        Hp(double value = 100.0)
-            : InteractableState { Types::Interactable::HP }
-            , m_current_health { value }
-            , m_max_health { value }
-        { }
+        Hp(double value = 100.0);
 
         void heal(double amount);
         void damage(double amount);
 
-        void receive_effect(Effects::Effect *effect) override
-        {
-            effect->apply_effect(this);
-        }
+        void receive_effect(Effects::Effect *effect) override;
 
-        double get_health() const { return m_current_health; }
-        double get_max_health() const { return m_max_health; }
+        void update() override;
 
-        void apply_base_multiplier(double mul) override;
-        void apply_additive_bonus(double add) override;
-        void apply_total_multiplier(double mul) override;
+        double get_health() const;
+        double get_max_health() const;
 
     protected:
         
     private:
+        double m_base_current_health {};
         double m_current_health {};
-        double m_max_health {};
+
+        double& m_base_max_health { get_base_value_ref() };
+        double& m_max_health { get_current_value_ref() };
     };
 }
 #endif//ENTITYEVENTHANDLER_INTERACTABLE_HP_H
