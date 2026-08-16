@@ -9,26 +9,18 @@ namespace Interactables {
     class Armour : public InteractableState
     {
     public:
-        Armour(double value = 0.0)
-            : InteractableState { Types::Interactable::ARMOUR }
-            , m_base_armour { value }
-            , m_current_armour { value }
+        Armour(double base_armour = DEFAULT_ARMOUR)
+            : InteractableState { Types::Interactable::ARMOUR, base_armour }
         { }
 
         void receive_effect(Effects::Effect *effect) override;
 
         double get_current_armour() const;
-        double get_base_armour() const;
-
-        void apply_base_multiplier(double mul) override;
-        void apply_additive_bonus(double add) override;
-        void apply_total_multiplier(double mul) override;
 
     protected:
 
     private:
-        double m_base_armour {};
-        double m_current_armour {};
+        constexpr static double DEFAULT_ARMOUR { 0.0 };
     };
 }
 

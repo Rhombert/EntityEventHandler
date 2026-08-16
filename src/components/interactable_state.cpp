@@ -23,9 +23,14 @@ void InteractableState::update()
                       * m_total_multiplier;
 }
 
-double InteractableState::get_current_value()
+double InteractableState::get_current_value() const
 {
     return m_current_value;
+}
+
+double InteractableState::get_base_value() const
+{
+    return m_base_value;
 }
 
 void InteractableState::apply_base_multiplier(double mul)

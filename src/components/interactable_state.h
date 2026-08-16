@@ -18,7 +18,8 @@ namespace Interactables {
         virtual void receive_effect(Effects::Effect *effect) = 0;
 
         virtual void update();
-        double get_current_value();
+        double get_current_value() const;
+        double get_base_value() const;
 
         virtual void apply_base_multiplier(double mul);
         virtual void apply_additive_bonus(double add);

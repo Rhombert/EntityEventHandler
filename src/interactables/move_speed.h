@@ -8,7 +8,7 @@ namespace Interactables {
     class MoveSpeed: public InteractableState {
 
     public:
-        MoveSpeed(double value = DEFAULT_MOVE_SPEED);
+        MoveSpeed(double base_move_speed = DEFAULT_MOVE_SPEED);
 
         void receive_effect(Effects::Effect *effect) override;
 
@@ -18,8 +18,6 @@ namespace Interactables {
 
     private:
         constexpr static double DEFAULT_MOVE_SPEED { 1.0 };
-        double m_base_move_speed { DEFAULT_MOVE_SPEED };
-        double m_current_move_speed { DEFAULT_MOVE_SPEED };
     };
 }
 

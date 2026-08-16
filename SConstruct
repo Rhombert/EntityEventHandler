@@ -8,8 +8,8 @@ godot_env = SConscript("godot-cpp/SConstruct",
 env = godot_env.Clone()
 
 # godot-cpp wants to hide the commands, so this yanks them back.
-env["CXXCOMSTR"] = env["CXXCOM"]
-env["SHLINKCOMSTR"] = env["SHLINKCOM"]
+# env["CXXCOMSTR"] = env["CXXCOM"]
+# env["SHLINKCOMSTR"] = env["SHLINKCOM"]
 
 # Cut out the C++ version assigned by godot_env
 env["CXXFLAGS"] = [

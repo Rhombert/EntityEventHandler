@@ -2,6 +2,9 @@
 
 using namespace Interactables;
 
-void TurnSpeed::apply_base_multiplier(double mul) {}
-void TurnSpeed::apply_additive_bonus(double mul) {}
-void TurnSpeed::apply_total_multiplier(double mul) {}
+void TurnSpeed::receive_effect(Effects::Effect *effect)
+{
+    effect -> apply_effect(this);
+}
+
+double TurnSpeed::get_turn_speed() const { return get_current_value(); }

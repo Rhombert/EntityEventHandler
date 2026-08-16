@@ -4,10 +4,8 @@
 
 using namespace Interactables;
 
-MoveSpeed::MoveSpeed(double value)
-    : InteractableState { Types::Interactable::TURN_SPEED }
-    , m_base_move_speed { value }
-    , m_current_move_speed { value }
+MoveSpeed::MoveSpeed(double base_move_speed)
+    : InteractableState { Types::Interactable::TURN_SPEED, base_move_speed }
 { }
 
 void MoveSpeed::receive_effect(Effects::Effect *effect)
@@ -15,4 +13,7 @@ void MoveSpeed::receive_effect(Effects::Effect *effect)
     effect -> apply_effect(this);
 }
 
-double MoveSpeed::get_move_speed() const { return m_current_move_speed; }
+double MoveSpeed::get_move_speed() const 
+{ 
+    return get_current_value(); 
+}
