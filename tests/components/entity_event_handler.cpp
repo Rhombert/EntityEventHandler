@@ -3,6 +3,7 @@
 #include "effects/damage.h"
 #include "types/types.h"
 #include <gtest/gtest.h>
+#include <iostream>
 
 class EntityEventHandlerTest : public testing::Test
 {
@@ -11,13 +12,14 @@ protected:
 
     const double MAX_HP { 100.0 };
     const double TICK_TIME { 0.2 };
+    const int TICK_LIMIT { 10 };
     const double DAMAGE_AMOUNT { 1.0 };
 
     EntityEventHandler event_handler { MAX_HP, 1.0 };
     Modifiers::Modifier mod_decimate {
         new Effects::Damage { DAMAGE_AMOUNT },
         TICK_TIME,
-        10
+        TICK_LIMIT,
     };
 };
 
@@ -57,10 +59,10 @@ TEST_F(EntityEventHandlerTest, DecimateTenTicksReducesCorrectAmountHp)
     int_decimate.add(mod_decimate);
 
     event_handler.recieve_interaction(int_decimate);
-    event_handler._process(TICK_TIME*9.0);
+    event_handler._process(TICK_TIME*8.0);
 
     auto* hp = event_handler.get_interactable<Types::Interactable::HP>();
-    ASSERT_EQ(hp->get_health(), MAX_HP - DAMAGE_AMOUNT * 10.0);
+    ASSERT_EQ(hp->get_health(), MAX_HP - DAMAGE_AMOUNT * 9.0);
 }
 
 TEST_F(EntityEventHandlerTest, DoubleDecimateTenTicksReducesCorrectAmountHp)
@@ -87,4 +89,32 @@ TEST_F(EntityEventHandlerTest, TwoInterDecimateTenTicksReducesCorrectAmountHp)
 
     auto* hp = event_handler.get_interactable<Types::Interactable::HP>();
     ASSERT_EQ(hp->get_health(), MAX_HP - DAMAGE_AMOUNT * 2.0 * 10.0);
+}
+
+TEST_F(EntityEventHandlerTest, SplitDoesNotExceedMaximumTicks)
+{
+    Interactions::Interaction int_decimate {};
+    int_decimate.add(mod_decimate);
+
+    event_handler.recieve_interaction(int_decimate);
+
+    event_handler._process(0.0);
+    for (int i{0}; i < TICK_LIMIT*2; ++i) {
+        event_handler._process(TICK_TIME);
+    }
+
+    auto* hp = event_handler.get_interactable<Types::Interactable::HP>();
+    ASSERT_EQ(hp->get_health(), MAX_HP - DAMAGE_AMOUNT * 10.0);
+}
+
+TEST_F(EntityEventHandlerTest, BatchedDoesNotExceedMaximumTicks)
+{
+    Interactions::Interaction int_decimate {};
+    int_decimate.add(mod_decimate);
+
+    event_handler.recieve_interaction(int_decimate);
+    event_handler._process(TICK_TIME*TICK_LIMIT*2);
+
+    auto* hp = event_handler.get_interactable<Types::Interactable::HP>();
+    ASSERT_EQ(hp->get_health(), MAX_HP - DAMAGE_AMOUNT * 10.0);
 }

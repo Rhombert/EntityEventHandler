@@ -13,7 +13,8 @@ namespace Effects {
     public:
         Heal(double heal_value)
             : Effect { Types::Interactable::HP }
-            , m_heal_value { heal_value }
+            , m_base_heal_value { heal_value }
+            , m_current_heal_value { heal_value }
         { }
 
         void reset() override;
@@ -25,7 +26,8 @@ namespace Effects {
     protected:
 
     private:
-        double m_heal_value {};
+        double m_base_heal_value {};
+        double m_current_heal_value {};
     };
 }
 

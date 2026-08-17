@@ -2,6 +2,7 @@
 #define ENTITYEVENTHANDLER_MODIFIER_EFFECT_H
 
 #include <bitset>
+#include <iostream>
 #include <memory>
 
 #include "types/types.h"

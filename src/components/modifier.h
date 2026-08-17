@@ -18,12 +18,22 @@ namespace Modifiers {
 
         Effects::Effect* get_effect() const;
 
+        // Modifiers need to operate over states in a particular order,
+        // with a variable number of ticks occuring each frame.
+        // The pipeline wants to call the modifier on each state
+        // once per frame. This creates the following scenario:
+        //  The modifier may need to tick multiple times within a frame.
+        //  This means that if damage is ticking 3 times in one frame,
+        //  and it's being affected by armour, it needs to deal its
+        //  damage-armour three times.
+        //  This is 3(damage-armour), NOT 3(damage-3armour), which is
+        //  the current behaviour.
+        // A potential solution is for the modifier to maintain
+        //  prepared instances that it sets up during each tick,
+        //  and expends through subsequent calls to each state.
+
         void apply(double delta, Interactables::InteractableState& state);
 
-        // Since there could be a variable number of apply calls each
-        //  tick, the Modifier is unable to determine when a tick
-        //  is actually completed, so this needs to be called from
-        //  the event_handler for now.
         void tick();
         bool has_remaining_ticks();
 

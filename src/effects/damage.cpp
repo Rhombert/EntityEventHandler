@@ -1,5 +1,6 @@
 #include "effects/damage.h"
 #include <algorithm>
+#include <iostream>
 #include <memory>
 
 using namespace Interactables;
