@@ -6,6 +6,7 @@
 #include "interactables/move_speed.h"
 #include "interactables/turn_speed.h"
 #include "types/types.h"
+#include <iostream>
 #include <memory>
 
 
@@ -36,12 +37,12 @@ EntityEventHandler::EntityEventHandler(
 
 void EntityEventHandler::_process(double delta) {
     //pre-tick for removal from each queue
-    for (int i { 0 }; i < m_modifiers.size(); ++i)
+    size_t mods_initial_size { m_modifiers.size() };
+    for (int i { 0 }; i < mods_initial_size; ++i)
     {
         std::shared_ptr<Modifiers::Modifier> mod = m_modifiers.front();
         m_modifiers.pop();
-        mod->tick(); 
-        mod->get_effect()->reset();
+        mod->tick(delta); 
         if (mod->has_remaining_ticks()) m_modifiers.push(mod);
     }
 
@@ -52,7 +53,7 @@ void EntityEventHandler::_process(double delta) {
         for (int q { 0 }; q < q_size; ++q) {
             std::shared_ptr<Modifiers::Modifier> modifier = queue.front(); 
             queue.pop();
-            modifier->apply(delta, *m_interactables[i]->get_state());
+            modifier->apply(*m_interactables[i]->get_state());
             if (modifier->has_remaining_ticks()) queue.push(modifier);
         }
     }

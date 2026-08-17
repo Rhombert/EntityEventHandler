@@ -3,7 +3,6 @@
 #include "effects/damage.h"
 #include "types/types.h"
 #include <gtest/gtest.h>
-#include <iostream>
 
 class EntityEventHandlerTest : public testing::Test
 {
@@ -21,6 +20,14 @@ protected:
         TICK_TIME,
         TICK_LIMIT,
     };
+
+    Modifiers::Modifier make_decimate() {
+        return {
+            new Effects::Damage { DAMAGE_AMOUNT },
+            TICK_TIME,
+            TICK_LIMIT,
+        };
+    }
 };
 
 TEST_F(EntityEventHandlerTest, AbleToRetrieveHp)
@@ -69,7 +76,8 @@ TEST_F(EntityEventHandlerTest, DoubleDecimateTenTicksReducesCorrectAmountHp)
 {
     Interactions::Interaction int_decimate {};
     int_decimate.add(mod_decimate);
-    int_decimate.add(mod_decimate);
+    auto mod_two = make_decimate();
+    int_decimate.add(mod_two);
 
     event_handler.recieve_interaction(int_decimate);
     event_handler._process(TICK_TIME*9.0);

@@ -18,29 +18,36 @@ protected:
 };
 
 TEST_F(ModifierTest, DecimateTicksImmediatelyWithNoDelta) {
-    decimate.apply(0.0, hp);
+    decimate.tick(0.0);
+    decimate.apply(hp);
     EXPECT_EQ(hp.get_health(), 99.0);
 }
 
 TEST_F(ModifierTest, DecimateDeltaOneTick) {
-    decimate.apply(0.2, hp);
+    decimate.tick(0.2);
+    decimate.apply(hp);
     EXPECT_EQ(hp.get_health(), 98.0);
 }
 
 TEST_F(ModifierTest, DecimateDeltaOneTickSplit) {
-    decimate.apply(0.1, hp);
-    decimate.apply(0.1, hp);
+    decimate.tick(0.1);
+    decimate.apply(hp);
+    decimate.tick(0.1);
+    decimate.apply(hp);
     EXPECT_EQ(hp.get_health(), 98.0);
 }
 
 TEST_F(ModifierTest, DecimateDeltaTenTicksIndividual) {
-    for (int i { 0 }; i < 10; ++i) {
-        decimate.apply(0.2, hp);
+    for (int i { 0 }; i < 9; ++i) {
+        // First tick ticks twice, instant by default.
+        decimate.tick(0.2);
+        decimate.apply(hp);
     }
-    EXPECT_EQ(hp.get_health(), 89.0);
+    EXPECT_EQ(hp.get_health(), 90.0);
 }
 
 TEST_F(ModifierTest, DecimateDeltaTenTicksGrouped) {
-    decimate.apply(0.2*10.0, hp);
-    EXPECT_EQ(hp.get_health(), 89.0);
+    decimate.tick(0.2*9.0);
+    decimate.apply(hp);
+    EXPECT_EQ(hp.get_health(), 90.0);
 }

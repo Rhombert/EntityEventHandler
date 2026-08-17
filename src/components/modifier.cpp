@@ -14,10 +14,7 @@ Modifier::Modifier(Effects::Effect* effect,
     , m_tick_count { 0 }
     , m_time_acc { instant_activation ? tick_rate : 0.0 }
     , m_instant_activation { instant_activation }
-{ 
-    std::cout << "Created modifier with count/num "
-              << m_tick_count << " / " << m_tick_num << '\n';
-}
+{ }
 
 Modifier::Modifier(const Modifier& modifier)
     : m_effect (modifier.m_effect->clone())
@@ -30,26 +27,28 @@ Modifier::Modifier(const Modifier& modifier)
 
 Effects::Effect* Modifier::get_effect() const { return m_effect.get(); }
 
-void Modifier::apply(double delta, 
-                           Interactables::InteractableState& state)
+void Modifier::apply(Interactables::InteractableState& state)
 {
-    if (!has_remaining_ticks()) return;
-    m_time_acc += delta;
-    while (m_time_acc >= m_tick_rate)
-    {
-        m_time_acc -= m_tick_rate;
-        m_effect->apply_effect(&state);
+    for (auto& effect : m_effect_instances) {
+        //TODO: This likely needs to be made to call the explicit
+        // implementation, not InteractableState&. ie call
+        // Hp& instead.
+        effect->apply_effect(&state);
     }
 }
 
-void Modifier::tick() { 
-    std::cout << "Tick!\n";
-    m_tick_count++; 
+void Modifier::tick(double delta) { 
+    m_effect_instances.clear();
+    m_time_acc += delta;
+    while (m_time_acc >= m_tick_rate)
+    {
+        if (!has_remaining_ticks()) break;
+        m_time_acc -= m_tick_rate;
+        m_effect_instances.push_back(m_effect->clone());
+        m_tick_count++;
+    }
 }
 
 bool Modifier::has_remaining_ticks() { 
-    std::cout << "Has remaining: " << m_tick_count << " < "
-              << m_tick_num << " = " << (m_tick_count < m_tick_num)
-              << '\n';
-    return m_tick_count <= m_tick_num; 
+    return m_tick_count < m_tick_num; 
 }

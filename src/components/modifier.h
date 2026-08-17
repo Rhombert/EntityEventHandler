@@ -2,6 +2,7 @@
 #define ENTITYEVENTHANDLER_MODIFIER_H
 
 #include <memory>
+#include <vector>
 
 #include "components/effect.h"
 #include "types/types.h"
@@ -18,23 +19,10 @@ namespace Modifiers {
 
         Effects::Effect* get_effect() const;
 
-        // Modifiers need to operate over states in a particular order,
-        // with a variable number of ticks occuring each frame.
-        // The pipeline wants to call the modifier on each state
-        // once per frame. This creates the following scenario:
-        //  The modifier may need to tick multiple times within a frame.
-        //  This means that if damage is ticking 3 times in one frame,
-        //  and it's being affected by armour, it needs to deal its
-        //  damage-armour three times.
-        //  This is 3(damage-armour), NOT 3(damage-3armour), which is
-        //  the current behaviour.
-        // A potential solution is for the modifier to maintain
-        //  prepared instances that it sets up during each tick,
-        //  and expends through subsequent calls to each state.
+        void tick(double delta);
 
-        void apply(double delta, Interactables::InteractableState& state);
+        void apply(Interactables::InteractableState& state);
 
-        void tick();
         bool has_remaining_ticks();
 
     protected:
@@ -50,6 +38,8 @@ namespace Modifiers {
         // The number of ticks before the Modifier self destructs
         int m_tick_num { 1 };
         int m_tick_count { 0 };
+
+        std::vector<std::unique_ptr<Effects::Effect>> m_effect_instances {};
         // The current accumulated time, determines when the threshold
         //  is passed for another tick.
         double m_time_acc { 0.0 };
