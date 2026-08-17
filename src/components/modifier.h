@@ -16,14 +16,16 @@ namespace Modifiers {
                  bool instant_activation = true);
         Modifier(const Modifier& modifier);
 
-        Types::Interactable get_target() const 
-        {
-            return m_effect->get_target(); 
-        }
-
-        Effects::Effect* get_effect() const { return m_effect.get(); }
+        Effects::Effect* get_effect() const;
 
         void apply(double delta, Interactables::InteractableState& state);
+
+        // Since there could be a variable number of apply calls each
+        //  tick, the Modifier is unable to determine when a tick
+        //  is actually completed, so this needs to be called from
+        //  the event_handler for now.
+        void tick();
+        bool has_remaining_ticks();
 
     protected:
         double get_tick_rate() const { return m_tick_rate; };
@@ -37,6 +39,7 @@ namespace Modifiers {
         double m_tick_rate { 0.2 };
         // The number of ticks before the Modifier self destructs
         int m_tick_num { 1 };
+        int m_tick_count { 0 };
         // The current accumulated time, determines when the threshold
         //  is passed for another tick.
         double m_time_acc { 0.0 };

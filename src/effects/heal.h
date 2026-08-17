@@ -16,7 +16,8 @@ namespace Effects {
             , m_heal_value { heal_value }
         { }
 
-        void apply_effect(Interactables::InteractableState* state) override;
+        void reset() override;
+
         void apply_effect(Interactables::Hp* state) override;
 
         std::unique_ptr<Effect> clone() const override;

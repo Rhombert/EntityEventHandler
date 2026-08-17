@@ -2,6 +2,10 @@
 
 using namespace Interactables;
 
+Armour::Armour(double base_armour)
+    : InteractableState { Types::Interactable::ARMOUR, base_armour }
+{ }
+
 void Armour::receive_effect(Effects::Effect *effect)
 {
     effect->apply_effect(this);

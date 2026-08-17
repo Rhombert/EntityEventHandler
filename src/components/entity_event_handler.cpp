@@ -6,37 +6,72 @@
 #include "interactables/move_speed.h"
 #include "interactables/turn_speed.h"
 #include "types/types.h"
+#include <memory>
 
 
-EntityEventHandler::EntityEventHandler(double hp, double turn_speed)
+using ITypes = Types::Interactable;
+
+EntityEventHandler::EntityEventHandler(
+        double base_hp,
+        double base_armour)
 {
     m_interactables.resize(
         (unsigned long)(Types::Interactable::INTERACTABLE_TYPES_COUNT)
     );
     m_interactables[(size_t)Types::Interactable::HP] =
-        std::make_unique<Interactable>(Hp { });
+        std::make_unique<Interactable>(Hp { base_hp });
     m_interactables[(size_t)Types::Interactable::ARMOUR] =
-        std::make_unique<Interactable>(Armour { });
+        std::make_unique<Interactable>(Armour { base_armour });
     m_interactables[(size_t)Types::Interactable::ATTACK_SPEED] =
         std::make_unique<Interactable>(AttackSpeed { });
     m_interactables[(size_t)Types::Interactable::MOVE_SPEED] =
         std::make_unique<Interactable>(MoveSpeed { });
     m_interactables[(size_t)Types::Interactable::TURN_SPEED] =
         std::make_unique<Interactable>(TurnSpeed { });
+
+    m_pipeline.resize(
+        (unsigned long)(Types::Interactable::INTERACTABLE_TYPES_COUNT)
+    );
 }
 
 void EntityEventHandler::_process(double delta) {
-    for (auto& interactable : m_interactables)
+    //pre-tick for removal from each queue
+    for (int i { 0 }; i < m_modifiers.size(); ++i)
     {
-        interactable->process(delta);
+        auto& mod = m_modifiers.front();
+        m_modifiers.pop();
+        mod->tick(); 
+        mod->get_effect()->reset();
+        if (mod->has_remaining_ticks()) m_modifiers.push(mod);
+    }
+
+    for (int i { 0 }; i < (int)ITypes::INTERACTABLE_TYPES_COUNT; ++i)
+    {
+        auto& queue = m_pipeline[i];
+        int q_size { (int)queue.size() };
+        for (int q { 0 }; q < q_size; ++q) {
+            auto& modifier = queue.front(); 
+            queue.pop();
+
+            modifier->apply(delta, *m_interactables[i]->get_state());
+            if (modifier->has_remaining_ticks()) queue.push(modifier);
+        }
     }
 }
 
 void EntityEventHandler::recieve_interaction(
         Interactions::Interaction& interaction)
 {
-    for (auto& interactable : m_interactables) {
-        if (!interactable) continue;
-        interaction.apply(*interactable);
+    for (const auto& modifier : interaction.get_modifiers()) {
+        m_modifiers.push(
+                std::make_shared<Modifiers::Modifier>(*modifier));
+        auto& new_mod = m_modifiers.back();
+
+        for (int i {0}; i < (int)ITypes::INTERACTABLE_TYPES_COUNT; ++i)
+        {
+            if (new_mod->get_effect()->does_target((ITypes)i)) {
+                m_pipeline[i].push(new_mod);
+            }
+        }
     }
 }

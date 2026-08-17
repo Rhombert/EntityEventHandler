@@ -1,8 +1,14 @@
 #include "effects/damage.h"
+#include <algorithm>
 #include <memory>
 
 using namespace Interactables;
 using namespace Effects;
+
+void Damage::reset()
+{
+    m_current_damage_value = m_base_damage_value;
+}
 
 void Damage::apply_effect(InteractableState* state)
 {
@@ -11,7 +17,13 @@ void Damage::apply_effect(InteractableState* state)
 
 void Damage::apply_effect(Hp* state)
 {
-    state->damage(m_damage_value);
+    state->damage(m_current_damage_value);
+}
+
+void Damage::apply_effect(Armour* state)
+{
+    m_current_damage_value = std::max(
+            m_current_damage_value - state->get_current_armour(), 0.0);
 }
 
 std::unique_ptr<Effect> Damage::clone() const

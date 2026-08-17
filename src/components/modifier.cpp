@@ -22,6 +22,8 @@ Modifier::Modifier(const Modifier& modifier)
     , m_instant_activation { modifier.m_instant_activation }
 { }
 
+Effects::Effect* Modifier::get_effect() const { return m_effect.get(); }
+
 void Modifier::apply(double delta, 
                            Interactables::InteractableState& state)
 {
@@ -32,3 +34,7 @@ void Modifier::apply(double delta,
         m_effect->apply_effect(&state);
     }
 }
+
+void Modifier::tick() { m_tick_count++; }
+
+bool Modifier::has_remaining_ticks() { return m_tick_count > 0; }

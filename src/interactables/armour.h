@@ -9,9 +9,7 @@ namespace Interactables {
     class Armour : public InteractableState
     {
     public:
-        Armour(double base_armour = DEFAULT_ARMOUR)
-            : InteractableState { Types::Interactable::ARMOUR, base_armour }
-        { }
+        Armour(double base_armour = DEFAULT_ARMOUR);
 
         void receive_effect(Effects::Effect *effect) override;
 

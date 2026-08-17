@@ -4,7 +4,7 @@ using namespace Interactables;
 
 void AttackSpeed::receive_effect(Effects::Effect *effect)
 { 
-    effect->apply_effect(*this); 
+    effect->apply_effect(this); 
 }
 
 double AttackSpeed::get_attack_speed() const 

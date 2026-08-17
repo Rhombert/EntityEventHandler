@@ -2,6 +2,7 @@
 #define ENTITYEVENTHANDLER_ENTITY_EVENT_HANDLER_H
 
 #include <vector>
+#include <queue>
 #include <memory>
 
 #include "components/interactable.h"
@@ -14,7 +15,10 @@ using namespace Interactables;
 
 class EntityEventHandler {
 public:
-    EntityEventHandler(double hp, double turn_speed);
+    EntityEventHandler(
+        double base_hp,
+        double base_armour
+    );
 
     void _process(double delta);
 
@@ -32,6 +36,10 @@ protected:
 
 private:
     std::vector<std::unique_ptr<Interactable>> m_interactables {};
+    std::queue<std::shared_ptr<Modifiers::Modifier>> m_modifiers {};
+
+    std::vector<std::queue<
+                std::shared_ptr<Modifiers::Modifier>>> m_pipeline {};
 };
 
 #endif //ENTITYEVENTHANDLER_ENTITY_EVENT_HANDLER_H

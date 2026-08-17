@@ -2,10 +2,8 @@
 #define ENTITYEVENTHANDLER_INTERACTABLE_H
 
 #include <memory>
-#include <vector>
 
 #include "components/interactable_state.h"
-#include "components/modifier.h"
 
 namespace Interactables {
     /**
@@ -22,26 +20,15 @@ namespace Interactables {
             : m_state { std::make_unique<S>( state ) }
         { }
 
-        // Handle the lifecycle of interactables. This primarily exists to
-        // facilitate `Modifier`s, which occur over time.
-        void process(double delta);
-
         Types::Interactable get_type() const;
         double get_value() const;
 
-        const InteractableState* get_state();
-
-        void attach(const Modifiers::Modifier& modifier);
-        void attach(const Modifiers::Modifier* modifier);
-        void attach(const Effects::Effect& effect);
-        void attach(const Effects::Effect* effect);
+        InteractableState* get_state();
 
     protected:
 
     private:
         std::unique_ptr<Interactables::InteractableState> m_state {};
-        std::vector<std::unique_ptr<Modifiers::Modifier>> m_modifiers {};
-        std::vector<std::unique_ptr<Effects::Effect>> m_effect_queue {};
     };
 }
 
