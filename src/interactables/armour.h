@@ -10,8 +10,11 @@ namespace Interactables {
     {
     public:
         Armour(double base_armour = DEFAULT_ARMOUR);
+        ~Armour() {}
 
         void receive_effect(Effects::Effect *effect) override;
+
+        void update() override;
 
         double get_current_armour() const;
 

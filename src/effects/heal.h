@@ -17,6 +17,8 @@ namespace Effects {
             , m_current_heal_value { heal_value }
         { }
 
+        ~Heal() = default;
+
         void reset() override;
 
         void apply_effect(Interactables::Hp* state) override;

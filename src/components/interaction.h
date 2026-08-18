@@ -16,6 +16,7 @@ namespace Interactions {
         using ModifierVector = 
             std::vector<std::unique_ptr<Modifiers::Modifier>>;
 
+        void add(Modifiers::Modifier&&);
         void add(Modifiers::Modifier&);
 
         const ModifierVector& get_modifiers() const;

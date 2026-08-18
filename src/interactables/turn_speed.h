@@ -14,6 +14,8 @@ namespace Interactables {
                 Types::Interactable::TURN_SPEED, base_turn_speed }
         { }
 
+        ~TurnSpeed() {}
+
         void receive_effect(Effects::Effect *effect) override;
 
         double get_turn_speed() const;

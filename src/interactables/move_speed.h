@@ -9,6 +9,7 @@ namespace Interactables {
 
     public:
         MoveSpeed(double base_move_speed = DEFAULT_MOVE_SPEED);
+        ~MoveSpeed() {}
 
         void receive_effect(Effects::Effect *effect) override;
 

@@ -11,9 +11,9 @@ namespace Interactables {
         InteractableState();
         InteractableState(Types::Interactable type);
         InteractableState(Types::Interactable type, double base_value);
-        ~InteractableState();
+        virtual ~InteractableState();
 
-        Types::Interactable get_type() const { return m_type; }
+        Types::Interactable get_type() const;
 
         virtual void receive_effect(Effects::Effect *effect) = 0;
 

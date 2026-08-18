@@ -1,13 +1,15 @@
 #include "entity_event_handler.h"
 
-#include "interactables/armour.h"
+#include <iostream>
+#include <memory>
+
+#include "components/interactable.h"
 #include "interactables/hp.h"
+#include "interactables/armour.h"
 #include "interactables/attack_speed.h"
 #include "interactables/move_speed.h"
 #include "interactables/turn_speed.h"
 #include "types/types.h"
-#include <iostream>
-#include <memory>
 
 
 using ITypes = Types::Interactable;
@@ -36,7 +38,6 @@ EntityEventHandler::EntityEventHandler(
 }
 
 void EntityEventHandler::_process(double delta) {
-    //pre-tick for removal from each queue
     size_t mods_initial_size { m_modifiers.size() };
     for (int i { 0 }; i < mods_initial_size; ++i)
     {

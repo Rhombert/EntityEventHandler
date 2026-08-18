@@ -7,19 +7,15 @@
 class EntityEventHandlerTest : public testing::Test
 {
 protected:
-    EntityEventHandlerTest() {}
+    EntityEventHandlerTest() {
+    }
 
-    const double MAX_HP { 100.0 };
-    const double TICK_TIME { 0.2 };
-    const int TICK_LIMIT { 10 };
-    const double DAMAGE_AMOUNT { 1.0 };
+    static constexpr double MAX_HP { 100.0 };
+    static constexpr double TICK_TIME { 0.2 };
+    static constexpr int TICK_LIMIT { 10 };
+    static constexpr double DAMAGE_AMOUNT { 1.0 };
 
     EntityEventHandler event_handler { MAX_HP, 1.0 };
-    Modifiers::Modifier mod_decimate {
-        new Effects::Damage { DAMAGE_AMOUNT },
-        TICK_TIME,
-        TICK_LIMIT,
-    };
 
     Modifiers::Modifier make_decimate() {
         return {
@@ -39,7 +35,7 @@ TEST_F(EntityEventHandlerTest, AbleToRetrieveHp)
 TEST_F(EntityEventHandlerTest, DecimateBaseTickReducesHp)
 {
     Interactions::Interaction int_decimate {};
-    int_decimate.add(mod_decimate);
+    int_decimate.add(make_decimate());
 
     event_handler.recieve_interaction(int_decimate);
     event_handler._process(0.0);
@@ -50,8 +46,9 @@ TEST_F(EntityEventHandlerTest, DecimateBaseTickReducesHp)
 
 TEST_F(EntityEventHandlerTest, DecimateBaseTickReducesCorrectAmountHp)
 {
+    EntityEventHandler event_handler { MAX_HP, 1.0 };
     Interactions::Interaction int_decimate {};
-    int_decimate.add(mod_decimate);
+    int_decimate.add(make_decimate());
 
     event_handler.recieve_interaction(int_decimate);
     event_handler._process(0.0);
@@ -62,20 +59,22 @@ TEST_F(EntityEventHandlerTest, DecimateBaseTickReducesCorrectAmountHp)
 
 TEST_F(EntityEventHandlerTest, DecimateTenTicksReducesCorrectAmountHp)
 {
+    EntityEventHandler event_handler { MAX_HP, 1.0 };
     Interactions::Interaction int_decimate {};
-    int_decimate.add(mod_decimate);
+    int_decimate.add(make_decimate());
 
     event_handler.recieve_interaction(int_decimate);
-    event_handler._process(TICK_TIME*8.0);
+    event_handler._process(TICK_TIME*9.0);
 
     auto* hp = event_handler.get_interactable<Types::Interactable::HP>();
-    ASSERT_EQ(hp->get_health(), MAX_HP - DAMAGE_AMOUNT * 9.0);
+    ASSERT_EQ(hp->get_health(), MAX_HP - DAMAGE_AMOUNT * 10.0);
 }
 
 TEST_F(EntityEventHandlerTest, DoubleDecimateTenTicksReducesCorrectAmountHp)
 {
+    EntityEventHandler event_handler { MAX_HP, 1.0 };
     Interactions::Interaction int_decimate {};
-    int_decimate.add(mod_decimate);
+    int_decimate.add(make_decimate());
     auto mod_two = make_decimate();
     int_decimate.add(mod_two);
 
@@ -89,7 +88,7 @@ TEST_F(EntityEventHandlerTest, DoubleDecimateTenTicksReducesCorrectAmountHp)
 TEST_F(EntityEventHandlerTest, TwoInterDecimateTenTicksReducesCorrectAmountHp)
 {
     Interactions::Interaction int_decimate {};
-    int_decimate.add(mod_decimate);
+    int_decimate.add(make_decimate());
 
     event_handler.recieve_interaction(int_decimate);
     event_handler.recieve_interaction(int_decimate);
@@ -102,7 +101,7 @@ TEST_F(EntityEventHandlerTest, TwoInterDecimateTenTicksReducesCorrectAmountHp)
 TEST_F(EntityEventHandlerTest, SplitDoesNotExceedMaximumTicks)
 {
     Interactions::Interaction int_decimate {};
-    int_decimate.add(mod_decimate);
+    int_decimate.add(make_decimate());
 
     event_handler.recieve_interaction(int_decimate);
 
@@ -118,10 +117,10 @@ TEST_F(EntityEventHandlerTest, SplitDoesNotExceedMaximumTicks)
 TEST_F(EntityEventHandlerTest, BatchedDoesNotExceedMaximumTicks)
 {
     Interactions::Interaction int_decimate {};
-    int_decimate.add(mod_decimate);
+    int_decimate.add(make_decimate());
 
     event_handler.recieve_interaction(int_decimate);
-    event_handler._process(TICK_TIME*TICK_LIMIT*2);
+    event_handler._process(TICK_TIME*TICK_LIMIT*10);
 
     auto* hp = event_handler.get_interactable<Types::Interactable::HP>();
     ASSERT_EQ(hp->get_health(), MAX_HP - DAMAGE_AMOUNT * 10.0);

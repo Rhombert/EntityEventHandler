@@ -13,6 +13,8 @@ namespace Interactables {
                 Types::Interactable::ATTACK_SPEED, base_attack_speed }
         { }
 
+        ~AttackSpeed() {}
+
         void receive_effect(Effects::Effect *effect) override;
 
         double get_attack_speed() const;

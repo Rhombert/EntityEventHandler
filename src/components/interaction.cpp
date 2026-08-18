@@ -2,6 +2,11 @@
 
 using namespace Interactions;
 
+void Interaction::add(Modifiers::Modifier&& modifier)
+{
+    m_modifiers.push_back(std::make_unique<Modifiers::Modifier>(modifier));
+}
+
 void Interaction::add(Modifiers::Modifier& modifier)
 {
     m_modifiers.emplace_back(std::make_unique<Modifiers::Modifier>(modifier));

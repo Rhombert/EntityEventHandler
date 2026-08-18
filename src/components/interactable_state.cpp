@@ -1,4 +1,5 @@
 #include "interactable_state.h"
+#include "types/types.h"
 
 using namespace Interactables;
 
@@ -16,6 +17,11 @@ InteractableState::InteractableState(
 { }
 
 InteractableState::~InteractableState() {}
+
+Types::Interactable InteractableState::get_type() const 
+{
+    return m_type;
+}
 
 void InteractableState::update()
 {

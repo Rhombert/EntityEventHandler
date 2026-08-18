@@ -12,15 +12,23 @@ namespace Effects {
     {
     public:
         Damage(double damage_value)
-            : Effect { Types::Interactable::HP }
+            : Effect { 
+                Types::Interactable::HP,
+                Types::Interactable::ARMOUR,
+            }
             , m_base_damage_value { damage_value }
             , m_current_damage_value { damage_value }
         { }
         Damage(const Damage& damage)
-            : Effect { Types::Interactable::HP }
+            : Effect { 
+                Types::Interactable::HP,
+                Types::Interactable::ARMOUR,
+            }
             , m_base_damage_value { damage.m_base_damage_value }
             , m_current_damage_value { damage.m_current_damage_value }
         { }
+
+        ~Damage() = default;
 
         void reset() override;
 

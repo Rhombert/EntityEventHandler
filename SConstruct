@@ -17,7 +17,7 @@ env["CXXFLAGS"] = [
     if not flag.startswith("-std=")
 ]
 env.Append(
-    CXXFLAGS=["-std=c++26"],
+    CXXFLAGS=["-std=c++26", "-ggdb", "-O0"],
     CPPPATH=[
         "src/",
     ]

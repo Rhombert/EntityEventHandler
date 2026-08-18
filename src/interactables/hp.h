@@ -10,6 +10,8 @@ namespace Interactables {
     public:
         Hp(double value = 100.0);
 
+        ~Hp() {}
+
         void heal(double amount);
         void damage(double amount);
 

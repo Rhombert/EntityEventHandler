@@ -2,7 +2,7 @@
 #define ENTITYEVENTHANDLER_MODIFIER_EFFECT_H
 
 #include <bitset>
-#include <iostream>
+#include <concepts>
 #include <memory>
 
 #include "types/types.h"
@@ -21,18 +21,15 @@ namespace Effects {
     {
     public:
         Effect() { }
-        Effect(Types::Interactable target) {
-            m_targets.set((size_t)target);
+
+        template<typename... T>
+            requires(std::same_as<T, Types::Interactable> && ...)
+        Effect(T... targets)
+        {
+            (add_target(targets), ...);
         };
 
-        //TODO: Figure this one out, replace the base constructor.
-        // template<typename... T>
-        // Effect(T... targets)
-        // {
-        //     f(m_targets.set(targets)...);
-        // };
-
-        // virtual ~Effect() = default;
+        virtual ~Effect() {};
 
         virtual void apply_effect(Interactables::InteractableState* state) {};
         virtual void apply_effect(Interactables::Hp* state) {};

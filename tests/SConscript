@@ -19,11 +19,11 @@ sources = (
     Glob("#/src/**/*.cpp")
 )
 
-common_libs = ['gtest_main', 'gtest', 'gmock_main', 'gmock', 'pthread']
+common_libs = ['gtest_main', 'gtest', 'gmock_main', 'gmock']
 
 env_test.Append(
     # Use the same as the project
-    # CXXFLAGS=["-std=c++26"],
+    CXXFLAGS=["-std=c++26", "-ggdb", "-O0"],
     CPPPATH=[
         *include_path_list,
         *lib_path_list,
