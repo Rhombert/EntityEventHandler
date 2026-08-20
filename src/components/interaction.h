@@ -22,7 +22,6 @@ namespace Interactions {
         const ModifierVector& get_modifiers() const;
 
     protected:
-        static void _bind_methods();
 
     private:
         ModifierVector m_modifiers {};

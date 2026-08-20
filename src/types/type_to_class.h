@@ -3,6 +3,9 @@
 
 #include "types/types.h"
 #include "interactables/hp.h"
+#include "interactables/armour.h"
+#include "interactables/attack_speed.h"
+#include "interactables/move_speed.h"
 #include "interactables/turn_speed.h"
 
 namespace Types {
@@ -14,6 +17,21 @@ namespace Types {
     template<>
     struct InteractableType<Types::Interactable::HP> {
         using type = Hp;
+    };
+
+    template<>
+    struct InteractableType<Types::Interactable::ARMOUR> {
+        using type = Armour;
+    };
+
+    template<>
+    struct InteractableType<Types::Interactable::ATTACK_SPEED> {
+        using type = AttackSpeed;
+    };
+
+    template<>
+    struct InteractableType<Types::Interactable::MOVE_SPEED> {
+        using type = MoveSpeed;
     };
 
     template<>

@@ -11,6 +11,14 @@ namespace Effects {
     class Damage : public Effect
     {
     public:
+        Damage()
+            : Effect { 
+                Types::Interactable::HP,
+                Types::Interactable::ARMOUR,
+            }
+            , m_base_damage_value { DEFAULT_DAMAGE }
+            , m_current_damage_value { DEFAULT_DAMAGE }
+        { }
         Damage(double damage_value)
             : Effect { 
                 Types::Interactable::HP,
@@ -37,6 +45,8 @@ namespace Effects {
         void apply_effect(Interactables::Armour* state) override;
 
         std::unique_ptr<Effect> clone() const override;
+
+        constexpr static double DEFAULT_DAMAGE { 1.0 };
             
     protected:
 

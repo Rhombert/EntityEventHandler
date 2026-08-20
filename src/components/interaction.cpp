@@ -16,7 +16,3 @@ const Interaction::ModifierVector& Interaction::get_modifiers() const
 {
     return m_modifiers;
 }
-
-void Interaction::_bind_methods() {
-
-}

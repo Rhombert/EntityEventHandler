@@ -1,16 +1,12 @@
 #include "register_types.h"
 
+#include "binding/damage_gd.h"
+#include "binding/modifier_gd.h"
+#include "binding/effect_gd.h"
+#include "binding/interaction_gd.h"
 #include "godot_cpp/core/class_db.hpp"
 
-#include "components/modifier.h"
-#include "components/interactable_state.h"
-#include "components/interactable.h"
-#include "components/interaction.h"
-#include "components/entity_event_handler.h"
-
-#include "interactables/hp.h"
-
-#include "effects/heal.h"
+#include "binding/entity_event_handler_gd.h"
 
 #include <gdextension_interface.h>
 #include <godot_cpp/core/defs.hpp>
@@ -24,14 +20,11 @@ void initialize_entity_event_handler_module(ModuleInitializationLevel p_level) {
 		return;
 	}
 
-	// GDREGISTER_CLASS(Modifier);
-	// GDREGISTER_CLASS(Interaction);
-    // GDREGISTER_CLASS(InteractableState);
-	// GDREGISTER_CLASS(Interactable);
-    // GDREGISTER_CLASS(Hp);
-    // GDREGISTER_CLASS(Heal);
-
-	// GDREGISTER_CLASS(EntityEventHandler);
+    GDREGISTER_CLASS(EffectGd);
+    GDREGISTER_CLASS(DamageGd);
+    GDREGISTER_CLASS(ModifierGd);
+    GDREGISTER_CLASS(InteractionGd);
+    GDREGISTER_CLASS(EntityEventHandlerGd);
 }
 
 void uninitialize_entity_event_handler_module(ModuleInitializationLevel p_level) {
