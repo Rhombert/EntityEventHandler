@@ -22,6 +22,8 @@ namespace Interactables {
         double get_health() const;
         double get_max_health() const;
 
+        void set_value(double value) override;
+
     protected:
         
     private:

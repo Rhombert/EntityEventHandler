@@ -15,6 +15,11 @@ namespace godot {
             double base_armour
         );
 
+        static Ref<EntityEventHandlerGd> create(
+            double base_hp,
+            double base_armour
+        );
+
         void _process(double delta);
 
         void receive_interaction(Variant interaction);

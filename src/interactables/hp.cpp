@@ -39,3 +39,10 @@ void Hp::update()
     if (old_max_hp != 0) shift = m_current_health / old_max_hp;
     m_current_health += difference * shift;
 }
+
+void Hp::set_value(double value)
+{
+    InteractableState::set_value(value);
+    m_base_current_health = value;
+    m_current_health = value;
+}

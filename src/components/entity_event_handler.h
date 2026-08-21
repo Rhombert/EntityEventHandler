@@ -24,13 +24,15 @@ public:
 
     void recieve_interaction(Interactions::Interaction& interaction);
 
+    void set_hp(double);
+    void set_armour(double);
+
     template<Types::Interactable I>
     const Types::InteractableTypeT<I>* get_interactable() const
     { 
-        return static_cast<const Types::InteractableTypeT<I>*>(
-            m_interactables.at((size_t)I).get()->get_state()
-        );
+        return get_interactable_mut<I>();
     }
+
 
 protected:
 
@@ -40,6 +42,14 @@ private:
 
     std::vector<std::queue<
                 std::shared_ptr<Modifiers::Modifier>>> m_pipeline {};
+
+    template<Types::Interactable I>
+    Types::InteractableTypeT<I>* get_interactable_mut() const
+    { 
+        return static_cast<Types::InteractableTypeT<I>*>(
+            m_interactables.at(static_cast<size_t>(I)).get()->get_state()
+        );
+    }
 };
 
 #endif //ENTITYEVENTHANDLER_ENTITY_EVENT_HANDLER_H

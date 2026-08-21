@@ -76,3 +76,9 @@ void EntityEventHandler::recieve_interaction(
         }
     }
 }
+
+void EntityEventHandler::set_hp(double hp)
+{
+    auto *_hp = get_interactable_mut<Types::Interactable::HP>();
+    _hp->set_value(hp);
+}

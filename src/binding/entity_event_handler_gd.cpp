@@ -19,6 +19,16 @@ EntityEventHandlerGd::EntityEventHandlerGd(
     : m_event_handler { base_hp, base_armour }
 { }
 
+Ref<EntityEventHandlerGd> EntityEventHandlerGd::create(
+        double base_hp,
+        double base_armour
+        )
+{
+    return Ref<EntityEventHandlerGd>(memnew(
+                EntityEventHandlerGd( base_hp, base_armour )
+            ));
+};
+
 void EntityEventHandlerGd::_process(double delta)
 {
     m_event_handler._process(delta);
@@ -27,7 +37,6 @@ void EntityEventHandlerGd::_process(double delta)
 void EntityEventHandlerGd::receive_interaction(
         Variant interaction) 
 {
-    print_line("receive_interaction received: ", interaction.get_type());
     auto* object = interaction.get_validated_object();
     auto* c_interaction = Object::cast_to<InteractionGd>(object);
     m_event_handler.recieve_interaction(c_interaction->get_interaction());
@@ -44,6 +53,9 @@ void EntityEventHandlerGd::print_state()
 }
 
 void EntityEventHandlerGd::_bind_methods() {
+    ClassDB::bind_static_method("EntityEventHandlerGd",
+                                D_METHOD("create", "base_hp", "base_armour"),
+                                &EntityEventHandlerGd::create);
     ClassDB::bind_method(D_METHOD("_process", "delta"),
                          &EntityEventHandlerGd::_process);
     ClassDB::bind_method(D_METHOD("receive_interaction", "interaction"),

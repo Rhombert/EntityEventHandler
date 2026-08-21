@@ -39,6 +39,12 @@ double InteractableState::get_base_value() const
     return m_base_value;
 }
 
+void InteractableState::set_value(double value)
+{
+    m_base_value = value;
+    m_current_value = value;
+}
+
 void InteractableState::apply_base_multiplier(double mul)
 {
     m_base_multiplier += mul;

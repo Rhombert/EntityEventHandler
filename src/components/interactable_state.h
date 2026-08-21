@@ -21,6 +21,9 @@ namespace Interactables {
         double get_current_value() const;
         double get_base_value() const;
 
+        // Sets both the base and current value to `value`
+        virtual void set_value(double value);
+
         virtual void apply_base_multiplier(double mul);
         virtual void apply_additive_bonus(double add);
         virtual void apply_total_multiplier(double mul);
