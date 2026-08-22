@@ -15,15 +15,18 @@ protected:
     static constexpr int TICK_LIMIT { 10 };
     static constexpr double DAMAGE_AMOUNT { 1.0 };
 
-    EntityEventHandler event_handler { MAX_HP, 1.0 };
+    EntityEventHandler event_handler { MAX_HP, 0.0 };
 
-    Modifiers::Modifier make_decimate() {
+    Modifiers::Modifier make_decimate(
+                double damage_amount = DAMAGE_AMOUNT
+            ) {
         return {
-            new Effects::Damage { DAMAGE_AMOUNT },
+            new Effects::Damage { damage_amount },
             TICK_TIME,
             TICK_LIMIT,
         };
     }
+
 };
 
 TEST_F(EntityEventHandlerTest, AbleToRetrieveHp)
@@ -46,7 +49,6 @@ TEST_F(EntityEventHandlerTest, DecimateBaseTickReducesHp)
 
 TEST_F(EntityEventHandlerTest, DecimateBaseTickReducesCorrectAmountHp)
 {
-    EntityEventHandler event_handler { MAX_HP, 1.0 };
     Interactions::Interaction int_decimate {};
     int_decimate.add(make_decimate());
 
@@ -59,7 +61,6 @@ TEST_F(EntityEventHandlerTest, DecimateBaseTickReducesCorrectAmountHp)
 
 TEST_F(EntityEventHandlerTest, DecimateTenTicksReducesCorrectAmountHp)
 {
-    EntityEventHandler event_handler { MAX_HP, 1.0 };
     Interactions::Interaction int_decimate {};
     int_decimate.add(make_decimate());
 
@@ -72,7 +73,6 @@ TEST_F(EntityEventHandlerTest, DecimateTenTicksReducesCorrectAmountHp)
 
 TEST_F(EntityEventHandlerTest, DoubleDecimateTenTicksReducesCorrectAmountHp)
 {
-    EntityEventHandler event_handler { MAX_HP, 1.0 };
     Interactions::Interaction int_decimate {};
     int_decimate.add(make_decimate());
     auto mod_two = make_decimate();
@@ -124,4 +124,45 @@ TEST_F(EntityEventHandlerTest, BatchedDoesNotExceedMaximumTicks)
 
     auto* hp = event_handler.get_interactable<Types::Interactable::HP>();
     ASSERT_EQ(hp->get_health(), MAX_HP - DAMAGE_AMOUNT * 10.0);
+}
+
+TEST_F(EntityEventHandlerTest, ArmourReducesDamage)
+{
+    EntityEventHandler event_handler { 100.0, 4.0 };
+    Interactions::Interaction int_decimate { };
+    int_decimate.add(make_decimate(5.0));
+
+    event_handler.recieve_interaction(int_decimate);
+    event_handler._process(0.0);
+
+    auto* hp = event_handler.get_interactable<Types::Interactable::HP>();
+    ASSERT_GT(hp->get_health(), 95.0);
+}
+
+TEST_F(EntityEventHandlerTest, ArmourReducesCorrectAmountOfDamage)
+{
+    EntityEventHandler event_handler { 100.0, 4.0 };
+    Interactions::Interaction int_decimate { };
+    int_decimate.add(make_decimate(5.0));
+
+    event_handler.recieve_interaction(int_decimate);
+    event_handler._process(0.0);
+
+    auto* hp = event_handler.get_interactable<Types::Interactable::HP>();
+    ASSERT_EQ(hp->get_health(), 99.0);
+}
+
+TEST_F(EntityEventHandlerTest, ArmourReducesCorrectAmountOfDamageMultipleTicks)
+{
+    EntityEventHandler event_handler { 100.0, 4.0 };
+    Interactions::Interaction int_decimate { };
+    int_decimate.add(make_decimate(5.0));
+
+    event_handler.recieve_interaction(int_decimate);
+    event_handler._process(0.0);
+    event_handler._process(TICK_TIME);
+    event_handler._process(TICK_TIME);
+
+    auto* hp = event_handler.get_interactable<Types::Interactable::HP>();
+    ASSERT_EQ(hp->get_health(), 97.0);
 }

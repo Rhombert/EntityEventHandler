@@ -14,6 +14,8 @@ namespace godot {
         DamageGd();
         DamageGd(double damage_value);
 
+        static Ref<DamageGd> create(double damage_value = 1.0);
+
         Effects::Damage get_damage_instance();
 
     protected:

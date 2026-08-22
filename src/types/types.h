@@ -4,12 +4,17 @@
 #include <bitset>
 
 namespace Types {
+    // The order of this enum also determines the order that
+    //  stats are processed in.
     enum class Interactable {
-        HP,
         ARMOUR,
+        HP,
+
         ATTACK_SPEED,
+
         MOVE_SPEED,
         TURN_SPEED,
+
         INTERACTABLE_TYPES_COUNT,
     };
 

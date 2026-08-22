@@ -2,7 +2,6 @@
 #include "types/types.h"
 #include <algorithm>
 #include <memory>
-#include <iostream>
 
 using namespace Interactables;
 using namespace Effects;
